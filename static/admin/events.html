@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Мероприятия</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="/static/js/admin-auth.js"></script>
+  <script src="/static/js/admin-staff-nav.js"></script>
+  <script src="/static/js/form-validators.js"></script>
+  <style>body { font-family: Inter, system-ui, sans-serif; }</style>
+</head>
+<body class="bg-[#F0F7FF] min-h-screen" data-staff-page="content">
+  <header class="border-b border-blue-100 bg-white">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-3">
+      <a href="../index.html" class="flex items-center gap-3 shrink-0 rounded-lg pr-1 hover:opacity-90 transition">
+        <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="36" height="36" class="h-9 w-9 rounded-xl bg-white object-contain ring-1 ring-slate-200" />
+        <span class="leading-tight">
+          <span class="font-display block font-semibold text-slate-900">ГАПОУ ОКЭИ</span>
+          <span class="text-xs text-slate-500">восп. отдел</span>
+        </span>
+      </a>
+      <nav class="flex flex-wrap gap-3 text-sm">
+        <a href="/admin/dashboard.html" class="text-gray-600 hover:text-blue-600">Статистика</a>
+        <a href="/admin/applications.html" data-staff-nav="applications" class="text-gray-600 hover:text-blue-600">Заявки</a>
+        <a href="/admin/events.html" data-staff-nav="content" class="font-medium text-blue-700">Мероприятия</a>
+        <a href="/admin/blog.html" data-staff-nav="content" class="text-gray-600 hover:text-blue-600">Блог</a>
+        <button type="button" id="logout" class="text-red-600">Выйти</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8 space-y-10">
+    <section class="bg-white border border-blue-100 shadow-sm rounded-xl p-6">
+      <h2 class="text-lg font-semibold">Новое мероприятие</h2>
+      <form id="create-form" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4" novalidate>
+        <div class="md:col-span-2">
+          <label class="block text-sm text-gray-600 mb-1">Название</label>
+          <input name="title" required class="w-full rounded-lg border border-gray-200 px-3 py-2" />
+        </div>
+        <div class="md:col-span-2">
+          <label class="block text-sm text-gray-600 mb-1">Описание</label>
+          <textarea name="description" rows="3" class="w-full rounded-lg border border-gray-200 px-3 py-2"></textarea>
+        </div>
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Начало (локальное)</label>
+          <input type="datetime-local" name="date_start" required class="w-full rounded-lg border border-gray-200 px-3 py-2" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Окончание</label>
+          <input type="datetime-local" name="date_end" class="w-full rounded-lg border border-gray-200 px-3 py-2" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Место</label>
+          <input name="location" class="w-full rounded-lg border border-gray-200 px-3 py-2" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-600 mb-1">Статус</label>
+          <select name="status" class="w-full rounded-lg border border-gray-200 px-3 py-2">
+            <option value="published">Опубликовано</option>
+            <option value="draft">Черновик</option>
+            <option value="finished">Завершено</option>
+          </select>
+        </div>
+        <div class="md:col-span-2">
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-2 font-medium">Создать</button>
+        </div>
+      </form>
+    </section>
+
+    <section>
+      <div class="flex flex-wrap gap-3 items-center justify-between mb-4">
+        <h1 class="text-2xl font-bold">Список мероприятий</h1>
+        <input id="search-ev" type="search" placeholder="Поиск…" class="rounded-lg border border-gray-200 px-3 py-2 text-sm" />
+      </div>
+      <div id="events-list" class="space-y-4"></div>
+      <p id="ev-empty" class="text-gray-500 hidden py-6">Нет мероприятий.</p>
+    </section>
+  </main>
+
+  <template id="card-tpl">
+    <div class="bg-white border border-blue-100 shadow-sm rounded-xl overflow-hidden">
+      <div class="p-5 flex flex-wrap justify-between gap-3">
+        <div>
+          <h3 class="font-semibold text-lg title"></h3>
+          <p class="text-sm text-gray-500 meta"></p>
+          <p class="text-sm text-gray-600 mt-2 desc"></p>
+        </div>
+        <div class="flex flex-col gap-2 items-end">
+          <span class="text-xs px-2 py-1 rounded bg-blue-50 text-blue-700 status"></span>
+          <a class="text-sm text-blue-600 puburl" href="#" target="_blank">Публичная страница</a>
+          <button type="button" class="text-sm text-gray-600 toggle">Участники ▾</button>
+          <button type="button" class="text-sm text-red-600 del">Удалить</button>
+        </div>
+      </div>
+      <div class="border-t border-blue-50 p-5 bg-[#F9FCFF] hidden panel">
+        <div class="flex flex-wrap gap-2 mb-3">
+          <button type="button" class="csv text-sm bg-white border border-blue-200 rounded-lg px-3 py-1 hover:bg-blue-50">Экспорт CSV</button>
+        </div>
+        <div class="overflow-x-auto mb-6">
+          <table class="min-w-full divide-y divide-blue-50 text-sm">
+            <thead class="bg-white text-left text-gray-600"><tr><th class="px-3 py-2">Имя</th><th class="px-3 py-2">Роль</th></tr></thead>
+            <tbody class="part-body divide-y divide-blue-50"></tbody>
+          </table>
+        </div>
+        <h4 class="font-medium text-sm mb-2">Добавить участников (по строкам)</h4>
+        <textarea rows="4" class="bulk w-full rounded-lg border border-gray-200 px-3 py-2 text-sm" placeholder="Иванов Иван&#10;Петров — координатор"></textarea>
+        <p class="text-xs text-gray-500 mt-1">Можно указать роль через « — » после имени.</p>
+        <button type="button" class="mt-2 add-bulk bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-2 text-sm">Добавить</button>
+      </div>
+    </div>
+  </template>
+
+  <p id="msg" class="max-w-6xl mx-auto px-4 text-sm hidden"></p>
+
+  <script>
+    document.getElementById("logout").addEventListener("click", async () => {
+      await adminAuth.fetch("/api/admin/logout", { method: "POST" });
+      sessionStorage.removeItem("csrf");
+      if (adminAuth.invalidateMeCache) adminAuth.invalidateMeCache();
+      window.location.href = "/admin/login.html";
+    });
+
+    let events = [];
+
+    function toISO(localStr) {
+      if (!localStr) return null;
+      const d = new Date(localStr);
+      return d.toISOString();
+    }
+
+    document.getElementById("create-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const rawEnd = fd.get("date_end");
+      const payloadValidate = {
+        title: fd.get("title"),
+        description: fd.get("description"),
+        date_start: fd.get("date_start"),
+        date_end: rawEnd && String(rawEnd).trim() !== "" ? rawEnd : null,
+        location: fd.get("location"),
+      };
+      const msg = document.getElementById("msg");
+      msg.classList.add("hidden");
+      const clientErr = window.FormValidators.validateEventCreate(payloadValidate);
+      if (clientErr) {
+        msg.textContent = clientErr;
+        msg.className = "max-w-6xl mx-auto px-4 text-sm text-red-600";
+        msg.classList.remove("hidden");
+        return;
+      }
+      const payload = {
+        title: fd.get("title"),
+        description: (fd.get("description") || "").trim() || null,
+        date_start: toISO(fd.get("date_start")),
+        date_end: fd.get("date_end") ? toISO(fd.get("date_end")) : null,
+        location: (fd.get("location") || "").trim() || null,
+        status: fd.get("status"),
+      };
+      try {
+        const res = await adminAuth.fetch("/api/admin/events", {
+          method: "POST",
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error(await adminAuth.parseError(res));
+        e.target.reset();
+        await loadEvents();
+        msg.textContent = "Мероприятие создано";
+        msg.className = "max-w-6xl mx-auto px-4 text-sm text-green-600";
+        msg.classList.remove("hidden");
+      } catch (err) {
+        if (err.message === "unauthorized") return;
+        msg.textContent = err.message;
+        msg.className = "max-w-6xl mx-auto px-4 text-sm text-red-600";
+        msg.classList.remove("hidden");
+      }
+    });
+
+    function parseBulk(text) {
+      const items = [];
+      text.split("\n").forEach((line) => {
+        const t = line.trim();
+        if (!t) return;
+        let name = t;
+        let role = "участник";
+        if (t.includes(" — ")) {
+          const [a, b] = t.split(" — ");
+          name = a.trim();
+          role = b.trim() || "участник";
+        }
+        items.push({ external_name: name, role });
+      });
+      return items;
+    }
+
+    async function loadDetail(id, card) {
+      const res = await adminAuth.fetch(`/api/admin/events/${id}/detail`);
+      if (!res.ok) return;
+      const data = await res.json();
+      const tbody = card.querySelector(".part-body");
+      tbody.innerHTML = (data.participants || [])
+        .map((p) => `<tr><td class="px-3 py-2">${p.display_name}</td><td class="px-3 py-2">${p.role_in_event}</td></tr>`)
+        .join("");
+      card._parts = data.participants || [];
+      card._title = data.title;
+    }
+
+    function renderList() {
+      const q = document.getElementById("search-ev").value.trim().toLowerCase();
+      const list = document.getElementById("events-list");
+      const empty = document.getElementById("ev-empty");
+      const tpl = document.getElementById("card-tpl");
+      const filtered = events.filter((ev) => !q || ev.title.toLowerCase().includes(q) || (ev.location || "").toLowerCase().includes(q));
+      list.innerHTML = "";
+      if (!filtered.length) {
+        empty.classList.remove("hidden");
+        return;
+      }
+      empty.classList.add("hidden");
+      filtered.forEach((ev) => {
+        const node = tpl.content.cloneNode(true);
+        const root = node.querySelector(".bg-white");
+        root.dataset.id = ev.id;
+        root.querySelector(".title").textContent = ev.title;
+        const ds = new Date(ev.date_start).toLocaleString("ru-RU");
+        root.querySelector(".meta").textContent = ds + (ev.location ? " · " + ev.location : "");
+        root.querySelector(".desc").textContent = (ev.description || "").slice(0, 200);
+        root.querySelector(".status").textContent = ev.status;
+        root.querySelector(".puburl").href = "/event.html?id=" + ev.id;
+
+        root.querySelector(".toggle").addEventListener("click", async () => {
+          const panel = root.querySelector(".panel");
+          panel.classList.toggle("hidden");
+          if (!panel.classList.contains("hidden")) await loadDetail(ev.id, root);
+        });
+
+        root.querySelector(".csv").addEventListener("click", () => {
+          const parts = root._parts || [];
+          if (!parts.length) return;
+          const esc = (s) => `"${String(s).replace(/"/g, '""')}"`;
+          const lines = [["Имя", "Роль"].map(esc).join(",")];
+          parts.forEach((p) => lines.push([p.display_name, p.role_in_event].map(esc).join(",")));
+          const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" });
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(blob);
+          a.download = `participants_${ev.id}.csv`;
+          a.click();
+        });
+
+        root.querySelector(".add-bulk").addEventListener("click", async () => {
+          const text = root.querySelector(".bulk").value;
+          const items = parseBulk(text);
+          if (!items.length) return;
+          const res = await adminAuth.fetch(`/api/admin/events/${ev.id}/participants`, {
+            method: "POST",
+            body: JSON.stringify({ items }),
+          });
+          if (res.ok) {
+            root.querySelector(".bulk").value = "";
+            await loadDetail(ev.id, root);
+          } else alert(await adminAuth.parseError(res));
+        });
+
+        root.querySelector(".del").addEventListener("click", async () => {
+          if (!confirm("Удалить мероприятие?")) return;
+          const res = await adminAuth.fetch(`/api/admin/events/${ev.id}`, { method: "DELETE" });
+          if (res.ok || res.status === 204) loadEvents();
+          else alert(await adminAuth.parseError(res));
+        });
+
+        list.appendChild(node);
+      });
+    }
+
+    document.getElementById("search-ev").addEventListener("input", renderList);
+
+    async function loadEvents() {
+      const res = await adminAuth.fetch("/api/admin/events");
+      if (!res.ok) return;
+      events = await res.json();
+      renderList();
+    }
+
+    loadEvents();
+  </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Панель — статистика</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="/static/js/admin-auth.js"></script>
+  <script src="/static/js/admin-staff-nav.js"></script>
+  <style>body { font-family: Inter, system-ui, sans-serif; }</style>
+</head>
+<body class="bg-[#F0F7FF] min-h-screen">
+  <header class="border-b border-blue-100 bg-white">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-3">
+      <a href="../index.html" class="flex items-center gap-3 shrink-0 rounded-lg pr-1 hover:opacity-90 transition">
+        <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="36" height="36" class="h-9 w-9 rounded-xl bg-white object-contain ring-1 ring-slate-200" />
+        <span class="leading-tight">
+          <span class="font-display block font-semibold text-slate-900">ГАПОУ ОКЭИ</span>
+          <span class="text-xs text-slate-500">восп. отдел</span>
+        </span>
+      </a>
+      <nav class="flex flex-wrap gap-3 text-sm">
+        <a href="/admin/dashboard.html" class="font-medium text-blue-700">Статистика</a>
+        <a href="/admin/applications.html" data-staff-nav="applications" class="text-gray-600 hover:text-blue-600">Заявки</a>
+        <a href="/admin/events.html" data-staff-nav="content" class="text-gray-600 hover:text-blue-600">Мероприятия</a>
+        <a href="/admin/blog.html" data-staff-nav="content" class="text-gray-600 hover:text-blue-600">Блог</a>
+        <button type="button" id="logout" class="text-red-600 hover:text-red-800">Выйти</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-10">
+    <div id="session-banner" class="hidden mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-3 shadow-sm">
+      <p class="text-sm text-emerald-950">
+        <span id="session-line" class="block text-emerald-900/90"></span>
+      </p>
+    </div>
+    <h1 class="text-2xl font-bold text-gray-900">Статистика</h1>
+    <div class="flex flex-wrap items-start justify-between gap-4 mt-2">
+      <p class="max-w-xl text-gray-600 text-sm">Цифры из базы. Кнопка «Обновить» или F5 подтягивает данные заново.</p>
+      <button type="button" id="refresh-stats" class="shrink-0 rounded-lg border border-blue-200 bg-white px-4 py-2 text-sm font-medium text-blue-700 shadow-sm hover:bg-blue-50 disabled:opacity-50">
+        Обновить цифры
+      </button>
+    </div>
+    <p id="stats-updated" class="text-xs text-gray-400 mt-3 hidden"></p>
+    <p id="loading" class="text-gray-500 mt-6">Загрузка…</p>
+    <div id="grid" class="hidden mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white border border-blue-100 shadow-sm rounded-xl p-6">
+        <p class="text-sm text-gray-500">Активных волонтёров</p>
+        <p id="v" class="text-3xl font-bold text-blue-600 mt-2">—</p>
+      </div>
+      <div class="bg-white border border-blue-100 shadow-sm rounded-xl p-6">
+        <p class="text-sm text-gray-500">Активных мероприятий</p>
+        <p id="e" class="text-3xl font-bold text-blue-600 mt-2">—</p>
+      </div>
+      <div class="bg-white border border-blue-100 shadow-sm rounded-xl p-6">
+        <p class="text-sm text-gray-500">Просмотров блога (сумма)</p>
+        <p id="b" class="text-3xl font-bold text-blue-600 mt-2">—</p>
+      </div>
+    </div>
+    <p id="err" class="text-red-600 mt-4 hidden max-w-2xl leading-relaxed"></p>
+  </main>
+
+  <script>
+    document.getElementById("logout").addEventListener("click", async () => {
+      await adminAuth.fetch("/api/admin/logout", { method: "POST" });
+      sessionStorage.removeItem("csrf");
+      if (adminAuth.invalidateMeCache) adminAuth.invalidateMeCache();
+      window.location.href = "/admin/login.html";
+    });
+
+    async function loadStats(showRefreshing) {
+      const loading = document.getElementById("loading");
+      const errEl = document.getElementById("err");
+      const grid = document.getElementById("grid");
+      const refreshBtn = document.getElementById("refresh-stats");
+      errEl.classList.add("hidden");
+      errEl.textContent = "";
+      if (showRefreshing) {
+        loading.classList.remove("hidden");
+        loading.textContent = "Обновляем…";
+        grid.classList.add("hidden");
+      }
+      try {
+        const res = await adminAuth.fetch("/api/admin/stats");
+        if (!res.ok) throw new Error(await adminAuth.parseError(res));
+        const s = await res.json();
+        loading.classList.add("hidden");
+        grid.classList.remove("hidden");
+        if (s.advisor) {
+          const line = document.getElementById("session-line");
+          const bits = [];
+          if (s.advisor.staff_position) bits.push(s.advisor.staff_position);
+          if (s.advisor.full_name) bits.push(s.advisor.full_name);
+          if (s.advisor.email) bits.push(s.advisor.email);
+          line.textContent = bits.join(" · ");
+          document.getElementById("session-banner").classList.remove("hidden");
+        }
+        document.getElementById("v").textContent = s.approved_volunteers;
+        document.getElementById("e").textContent = s.active_events;
+        document.getElementById("b").textContent = s.blog_views;
+        const ts = document.getElementById("stats-updated");
+        ts.textContent =
+          "Данные на момент: " +
+          new Date().toLocaleString("ru-RU", { dateStyle: "short", timeStyle: "medium" });
+        ts.classList.remove("hidden");
+      } catch (e) {
+        if (e.message === "unauthorized") {
+          loading.classList.remove("hidden");
+          loading.textContent = "Нет действующей сессии советника. Перенаправление на вход…";
+          return;
+        }
+        loading.classList.add("hidden");
+        grid.classList.remove("hidden");
+        errEl.textContent = e.message || "Ошибка загрузки";
+        errEl.classList.remove("hidden");
+      } finally {
+        if (refreshBtn) refreshBtn.disabled = false;
+      }
+    }
+
+    document.getElementById("refresh-stats").addEventListener("click", function () {
+      this.disabled = true;
+      loadStats(true);
+    });
+
+    (async () => {
+      await loadStats(false);
+    })();
+  </script>
+</body>
+</html>

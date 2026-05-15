@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Как устроено участие в волонтёрском движении ГАПОУ ОКЭИ: шаги от анкеты до справки." />
+  <title>Как устроено — ГАПОУ ОКЭИ · волонтёры</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: "#0f172a", mist: "#f0f7ff" },
+          fontFamily: {
+            display: ["Fraunces", "Georgia", "serif"],
+            sans: ["Source Sans 3", "system-ui", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="/static/css/theme.css" />
+</head>
+<body class="bg-white font-sans text-ink antialiased">
+  <header class="sticky top-0 z-30 border-b border-blue-100/80 bg-white/85 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <a href="index.html" class="group flex items-center gap-3">
+        <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-0.5 shadow-md shadow-blue-600/20 ring-2 ring-white" />
+        <span class="leading-tight">
+          <span class="font-display block text-lg font-semibold tracking-tight text-slate-900">ГАПОУ ОКЭИ</span>
+          <span class="text-xs font-medium text-slate-500">воспитательный отдел · волонтёрское направление</span>
+        </span>
+      </a>
+      <nav class="flex flex-wrap items-center gap-5 text-sm font-medium text-slate-600" aria-label="Основное меню">
+        <a href="about.html" class="nav-link hover:text-blue-700">О движении</a>
+        <a href="how.html" class="nav-link font-semibold text-blue-700" aria-current="page">Как устроено</a>
+        <a href="events.html" class="nav-link hover:text-blue-700">События</a>
+        <a href="college-news.html" class="nav-link hover:text-blue-700">Новости колледжа</a>
+        <a href="materials.html" class="nav-link hover:text-blue-700">Материалы</a>
+        <a href="faq.html" class="nav-link hover:text-blue-700">Вопросы</a>
+        <a href="/volunteer/login.html" class="nav-link hover:text-blue-700">Кабинет волонтёра</a>
+        <a href="apply.html" class="rounded-full bg-blue-600 px-4 py-2 text-white shadow-sm transition hover:bg-blue-700">Подать заявку</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="border-b border-blue-100/80 bg-mist/30">
+    <div class="max-w-6xl mx-auto px-4 py-8 md:py-10">
+      <p class="text-xs font-semibold uppercase tracking-wide text-blue-700">Порядок участия</p>
+      <h1 class="font-display mt-2 text-3xl font-semibold text-slate-900 md:text-4xl">Как это работает по шагам</h1>
+      <p class="mt-3 max-w-2xl text-slate-600">Короткая дорожка от желания до участия — без очередей «на общих собраниях» и без обязательства быть на каждом мероприятии.</p>
+      <p class="mt-6">
+        <a href="apply.html" class="inline-flex rounded-full bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-md hover:bg-blue-700">Перейти к анкете</a>
+      </p>
+    </div>
+  </div>
+
+  <section class="pattern-grid border-b border-blue-100 py-16 md:py-20">
+    <div class="max-w-6xl mx-auto px-4">
+      <ol class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <li class="relative rounded-2xl border border-white/80 bg-white/90 p-5 shadow-sm backdrop-blur-sm">
+          <span class="absolute -top-3 left-5 rounded-full bg-blue-600 px-2 py-0.5 text-xs font-bold text-white">Шаг 1</span>
+          <p class="mt-2 text-sm font-semibold text-slate-900">Заполняете анкету на сайте</p>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600">Указываете контакты и пару слов о том, что вам интересно.</p>
+        </li>
+        <li class="relative rounded-2xl border border-white/80 bg-white/90 p-5 shadow-sm backdrop-blur-sm">
+          <span class="absolute -top-3 left-5 rounded-full bg-blue-600 px-2 py-0.5 text-xs font-bold text-white">Шаг 2</span>
+          <p class="mt-2 text-sm font-semibold text-slate-900">Сотрудники отдела проверяют заявку</p>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600">При необходимости перезванивают или пишут на почту.</p>
+        </li>
+        <li class="relative rounded-2xl border border-white/80 bg-white/90 p-5 shadow-sm backdrop-blur-sm">
+          <span class="absolute -top-3 left-5 rounded-full bg-blue-600 px-2 py-0.5 text-xs font-bold text-white">Шаг 3</span>
+          <p class="mt-2 text-sm font-semibold text-slate-900">Получаете доступ к расписанию</p>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600">Выбираете события по силам и записываетесь в списки участников — см. раздел <a href="events.html" class="font-medium text-blue-700 hover:text-blue-900">События</a>.</p>
+        </li>
+        <li class="relative rounded-2xl border border-white/80 bg-white/90 p-5 shadow-sm backdrop-blur-sm">
+          <span class="absolute -top-3 left-5 rounded-full bg-blue-600 px-2 py-0.5 text-xs font-bold text-white">Шаг 4</span>
+          <p class="mt-2 text-sm font-semibold text-slate-900">Участвуете и фиксируете часы</p>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600">По итогам семестра можно запросить справку для вуза или конкурсов. Подробности — в <a href="faq.html" class="font-medium text-blue-700 hover:text-blue-900">частых вопросах</a>.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <footer class="border-t border-blue-100 bg-mist/50">
+    <div class="max-w-6xl mx-auto px-4 py-12 md:flex md:justify-between md:gap-10">
+      <div class="flex gap-5 max-w-xl">
+        <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="72" height="72" class="h-[4.5rem] w-[4.5rem] shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-slate-200/90" />
+        <div>
+          <p class="font-display text-lg font-semibold text-slate-900">ГАПОУ ОКЭИ</p>
+          <p class="mt-2 max-w-sm text-sm leading-relaxed text-slate-600">
+            Государственное автономное профессиональное образовательное учреждение Оренбургской области «Оренбургский колледж экономики и информатики» (ОКЭИ),
+            г. Оренбург, ул. Чкалова, 11. Воспитательный отдел ведёт волонтёрское направление на собственной платформе: заявки, календарь событий и материалы без сторонних CRM.
+          </p>
+          <p class="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
+            <a href="index.html" class="hover:text-blue-700">Главная</a>
+            <a href="about.html" class="hover:text-blue-700">О движении</a>
+            <a href="how.html" class="hover:text-blue-700">Как устроено</a>
+            <a href="events.html" class="hover:text-blue-700">События</a>
+            <a href="college-news.html" class="hover:text-blue-700">Новости колледжа</a>
+            <a href="materials.html" class="hover:text-blue-700">Материалы</a>
+            <a href="faq.html" class="hover:text-blue-700">Вопросы</a>
+          </p>
+        </div>
+      </div>
+      <div class="mt-8 md:mt-0 text-sm">
+        <p class="font-semibold text-slate-900">Контакты для связи</p>
+        <p class="mt-2 text-slate-600">Кабинеты воспитательного отдела — график приёма уточняйте в учебной части или на стенде отдела.</p>
+        <p class="mt-1 text-slate-600">
+          Официальные телефоны и адреса электронной почты колледжа опубликованы в разделе
+          <a href="https://oksei.ru/page/kontakty" target="_blank" rel="noopener noreferrer" class="font-medium text-blue-700 hover:text-blue-900">Контакты на oksei.ru</a>.
+        </p>
+        <p class="mt-4">
+          <a href="/volunteer/login.html" class="font-medium text-blue-700 hover:text-blue-900">Личный кабинет волонтёра →</a>
+        </p>
+      </div>
+    </div>
+    <div class="border-t border-blue-100/80 bg-white/60 py-4 text-center text-xs text-slate-500">
+      © ГАПОУ ОКЭИ · воспитательный отдел · волонтёрское направление
+    </div>
+  </footer>
+</body>
+</html>

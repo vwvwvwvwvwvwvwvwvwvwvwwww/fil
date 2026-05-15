@@ -1,0 +1,15 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+data
+logs
+*.md
+.pytest_cache
+.venv
+venv
+__pycache__
+.cursor

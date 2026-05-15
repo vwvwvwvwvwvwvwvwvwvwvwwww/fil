@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Новости ГАПОУ ОКЭИ: подборка с oksei.ru и лента сообщества ВКонтакте vk.com/gapou_okei для волонтёрского направления." />
+  <title>Новости колледжа — ГАПОУ ОКЭИ · волонтёры</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: "#0f172a", mist: "#f0f7ff" },
+          fontFamily: {
+            display: ["Fraunces", "Georgia", "serif"],
+            sans: ["Source Sans 3", "system-ui", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="/static/css/theme.css" />
+</head>
+<body class="bg-white font-sans text-ink antialiased">
+  <header class="sticky top-0 z-30 border-b border-blue-100/80 bg-white/85 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <a href="index.html" class="group flex items-center gap-3">
+        <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-0.5 shadow-md shadow-blue-600/20 ring-2 ring-white" />
+        <span class="leading-tight">
+          <span class="font-display block text-lg font-semibold tracking-tight text-slate-900">ГАПОУ ОКЭИ</span>
+          <span class="text-xs font-medium text-slate-500">воспитательный отдел · волонтёрское направление</span>
+        </span>
+      </a>
+      <nav class="flex flex-wrap items-center gap-5 text-sm font-medium text-slate-600" aria-label="Основное меню">
+        <a href="about.html" class="nav-link hover:text-blue-700">О движении</a>
+        <a href="how.html" class="nav-link hover:text-blue-700">Как устроено</a>
+        <a href="events.html" class="nav-link hover:text-blue-700">События</a>
+        <a href="college-news.html" class="nav-link font-semibold text-blue-700" aria-current="page">Новости колледжа</a>
+        <a href="materials.html" class="nav-link hover:text-blue-700">Материалы</a>
+        <a href="faq.html" class="nav-link hover:text-blue-700">Вопросы</a>
+        <a href="/volunteer/login.html" class="nav-link hover:text-blue-700">Кабинет волонтёра</a>
+        <a href="apply.html" class="rounded-full bg-blue-600 px-4 py-2 text-white shadow-sm transition hover:bg-blue-700">Подать заявку</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="py-16 md:py-20 border-b border-blue-100 bg-gradient-to-b from-mist/70 to-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex flex-wrap items-end justify-between gap-6 mb-10">
+        <div class="max-w-3xl">
+          <div class="rule-accent mb-6"></div>
+          <h1 class="font-display text-3xl font-semibold text-slate-900 md:text-4xl">Жизнь колледжа</h1>
+          <p class="mt-3 text-lg leading-relaxed text-slate-600">
+            Анонсы и фотографии с официального сайта ГАПОУ «Оренбургский колледж экономики и информатики» и свежие записи сообщества
+            <a href="https://vk.com/gapou_okei" target="_blank" rel="noopener noreferrer" class="font-medium text-blue-700 hover:text-blue-900">ВКонтакте</a>
+            — события учреждения, воспитательные акции и городская жизнь студентов.
+          </p>
+        </div>
+        <a href="https://oksei.ru/news" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-blue-700 hover:text-blue-900 whitespace-nowrap">
+          Все новости на oksei.ru →
+        </a>
+      </div>
+      <div class="grid gap-6 md:grid-cols-3">
+        <article class="flex flex-col overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm ring-1 ring-slate-900/5 card-lift">
+          <a href="https://oksei.ru/news/item/2240" target="_blank" rel="noopener noreferrer" class="block shrink-0 overflow-hidden aspect-[16/10] bg-slate-100">
+            <img src="/static/img/oksei/turizada-w600.jpg" alt="" loading="lazy" class="h-full w-full object-cover transition duration-300 hover:scale-[1.02]" />
+          </a>
+          <div class="flex flex-1 flex-col p-5">
+            <p class="text-xs font-semibold uppercase tracking-wide text-blue-700">Новость колледжа</p>
+            <h2 class="font-display mt-2 text-lg font-semibold leading-snug text-slate-900">
+              «Туриада — 2026» примет около 700 участников из России и зарубежья
+            </h2>
+            <p class="mt-3 flex-1 text-sm leading-relaxed text-slate-600">
+              Масштабное событие для студентов и гостей региона: проект реализуется при поддержке полномочного представителя Президента РФ в ПФО.
+            </p>
+            <a href="https://oksei.ru/news/item/2240" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex text-sm font-semibold text-blue-700 hover:text-blue-900">
+              Читать на oksei.ru →
+            </a>
+          </div>
+        </article>
+        <article class="flex flex-col overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm ring-1 ring-slate-900/5 card-lift">
+          <a href="https://oksei.ru/news/item/2241" target="_blank" rel="noopener noreferrer" class="block shrink-0 overflow-hidden aspect-[16/10] bg-slate-100">
+            <img src="/static/img/oksei/pobeda-lampa-w800.jpg" alt="" loading="lazy" class="h-full w-full object-cover transition duration-300 hover:scale-[1.02]" />
+          </a>
+          <div class="flex flex-1 flex-col p-5">
+            <p class="text-xs font-semibold uppercase tracking-wide text-blue-700">Память и воспитание</p>
+            <h2 class="font-display mt-2 text-lg font-semibold leading-snug text-slate-900">
+              Лампада Вечного огня и памятное мероприятие накануне 81-й годовщины Победы
+            </h2>
+            <p class="mt-3 flex-1 text-sm leading-relaxed text-slate-600">
+              Студенты ОКЭИ вместе с руководством колледжа приняли участие в церемонии и возложении цветов — актуально для гражданско-патриотического блока воспитания.
+            </p>
+            <a href="https://oksei.ru/news/item/2241" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex text-sm font-semibold text-blue-700 hover:text-blue-900">
+              Читать на oksei.ru →
+            </a>
+          </div>
+        </article>
+        <article class="flex flex-col overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm ring-1 ring-slate-900/5 card-lift">
+          <a href="https://oksei.ru/news/item/1937" target="_blank" rel="noopener noreferrer" class="block shrink-0 overflow-hidden aspect-[16/10] bg-slate-100">
+            <img src="/static/img/oksei/ya-prakt.png" alt="" loading="lazy" class="h-full w-full object-contain bg-white p-3 transition duration-300 hover:opacity-95" />
+          </a>
+          <div class="flex flex-1 flex-col p-5">
+            <p class="text-xs font-semibold uppercase tracking-wide text-blue-700">Образование и партнёры</p>
+            <h2 class="font-display mt-2 text-lg font-semibold leading-snug text-slate-900">
+              ОКЭИ и Яндекс Практикум запустили совместные программы
+            </h2>
+            <p class="mt-3 flex-1 text-sm leading-relaxed text-slate-600">
+              Стратегическое партнёрство: студенты могут параллельно с основным обучением осваивать дополнительные профессиональные программы от экспертов отрасли.
+            </p>
+            <a href="https://oksei.ru/news/item/1937" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex text-sm font-semibold text-blue-700 hover:text-blue-900">
+              Читать на oksei.ru →
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <section class="mt-16 md:mt-20 border-t border-blue-100 pt-14">
+        <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
+          <div class="max-w-3xl">
+            <p class="text-xs font-semibold uppercase tracking-wide text-blue-700">Сообщество колледжа</p>
+            <h2 class="font-display mt-2 text-2xl font-semibold text-slate-900 md:text-3xl">Последние записи ВКонтакте</h2>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600">
+              Официальное сообщество <a href="https://vk.com/gapou_okei" target="_blank" rel="noopener noreferrer" class="font-medium text-blue-700 hover:text-blue-900">vk.com/gapou_okei</a>.
+              Ниже — актуальная подборка записей со стены группы.
+            </p>
+          </div>
+          <a href="https://vk.com/gapou_okei" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-blue-700 hover:text-blue-900 whitespace-nowrap">
+            Все записи в VK →
+          </a>
+        </div>
+        <p id="vk-loading" class="text-sm text-slate-500 py-6">Загружаем ленту сообщества…</p>
+        <div id="vk-grid" class="hidden grid gap-6 sm:grid-cols-2 xl:grid-cols-3"></div>
+        <p id="vk-fallback" class="hidden rounded-2xl border border-dashed border-blue-200 bg-mist/40 px-5 py-8 text-center text-sm text-slate-600"></p>
+      </section>
+
+      <figure class="mt-12 overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm ring-1 ring-slate-900/5">
+        <img src="/static/img/oksei/gallery-campus-w1000.jpg" alt="Фрагмент фотогалереи колледжа с официального сайта oksei.ru" loading="lazy" class="w-full object-cover max-h-[280px] md:max-h-[320px]" />
+        <figcaption class="px-5 py-3 text-center text-xs text-slate-500">
+          Кадр из фотогалереи <a href="https://oksei.ru" class="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">oksei.ru</a> · материалы для ознакомления, полные тексты новостей — по ссылкам выше.
+        </figcaption>
+      </figure>
+      <p class="mt-6 text-center text-xs leading-relaxed text-slate-500">
+        Материалы с oksei.ru и записи из сообщества <a href="https://vk.com/gapou_okei" class="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ВКонтакте</a> ведут на первоисточник.
+        Правообладатель контента — ГАПОУ «Оренбургский колледж экономики и информатики».
+      </p>
+    </div>
+  </section>
+
+  <footer class="border-t border-blue-100 bg-mist/50">
+    <div class="max-w-6xl mx-auto px-4 py-12 md:flex md:justify-between md:gap-10">
+      <div class="flex gap-5 max-w-xl">
+        <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="72" height="72" class="h-[4.5rem] w-[4.5rem] shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-slate-200/90" />
+        <div>
+          <p class="font-display text-lg font-semibold text-slate-900">ГАПОУ ОКЭИ</p>
+          <p class="mt-2 max-w-sm text-sm leading-relaxed text-slate-600">
+            Государственное автономное профессиональное образовательное учреждение Оренбургской области «Оренбургский колледж экономики и информатики» (ОКЭИ),
+            г. Оренбург, ул. Чкалова, 11. Воспитательный отдел ведёт волонтёрское направление на собственной платформе: заявки, календарь событий и материалы без сторонних CRM.
+          </p>
+          <p class="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
+            <a href="index.html" class="hover:text-blue-700">Главная</a>
+            <a href="about.html" class="hover:text-blue-700">О движении</a>
+            <a href="how.html" class="hover:text-blue-700">Как устроено</a>
+            <a href="events.html" class="hover:text-blue-700">События</a>
+            <a href="college-news.html" class="hover:text-blue-700">Новости колледжа</a>
+            <a href="materials.html" class="hover:text-blue-700">Материалы</a>
+            <a href="faq.html" class="hover:text-blue-700">Вопросы</a>
+          </p>
+        </div>
+      </div>
+      <div class="mt-8 md:mt-0 text-sm">
+        <p class="font-semibold text-slate-900">Контакты для связи</p>
+        <p class="mt-2 text-slate-600">Кабинеты воспитательного отдела — график приёма уточняйте в учебной части или на стенде отдела.</p>
+        <p class="mt-1 text-slate-600">
+          Официальные телефоны и адреса электронной почты колледжа опубликованы в разделе
+          <a href="https://oksei.ru/page/kontakty" target="_blank" rel="noopener noreferrer" class="font-medium text-blue-700 hover:text-blue-900">Контакты на oksei.ru</a>.
+        </p>
+        <p class="mt-4">
+          <a href="/volunteer/login.html" class="font-medium text-blue-700 hover:text-blue-900">Личный кабинет волонтёра →</a>
+        </p>
+      </div>
+    </div>
+    <div class="border-t border-blue-100/80 bg-white/60 py-4 text-center text-xs text-slate-500">
+      © ГАПОУ ОКЭИ · воспитательный отдел · волонтёрское направление
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      function escapeHtml(s) {
+        const d = document.createElement("div");
+        d.textContent = s;
+        return d.innerHTML;
+      }
+
+      function fmtVkDate(iso) {
+        try {
+          const d = new Date(iso);
+          return d.toLocaleString("ru-RU", { dateStyle: "medium", timeStyle: "short" });
+        } catch {
+          return iso;
+        }
+      }
+
+      function previewText(text, max) {
+        const t = String(text || "").replace(/\s+/g, " ").trim();
+        if (t.length <= max) return t;
+        return t.slice(0, max).trim() + "…";
+      }
+
+      async function loadVkWall() {
+        const loading = document.getElementById("vk-loading");
+        const grid = document.getElementById("vk-grid");
+        const fallback = document.getElementById("vk-fallback");
+
+        try {
+          const res = await fetch("/api/vk/wall");
+          const data = await res.json();
+          loading.classList.add("hidden");
+
+          if (data.posts && data.posts.length) {
+            grid.classList.remove("hidden");
+            grid.innerHTML = data.posts
+                .map(function (p) {
+                  const img = p.photo_url
+                    ? '<div class="aspect-[16/10] w-full overflow-hidden bg-slate-100"><img src="' +
+                      escapeHtml(p.photo_url) +
+                      '" alt="" class="h-full w-full object-cover" loading="lazy" /></div>'
+                    : '<div class="aspect-[16/10] w-full bg-gradient-to-br from-slate-200 to-slate-100"></div>';
+                  const body = previewText(p.text, 320);
+                  const bodyHtml = body
+                    ? '<p class="mt-3 flex-1 text-sm leading-relaxed text-slate-600 line-clamp-6 whitespace-pre-line">' +
+                      escapeHtml(body) +
+                      "</p>"
+                    : '<p class="mt-3 flex-1 text-sm italic text-slate-500">Публикация с фото — откройте запись ВКонтакте.</p>';
+                  return (
+                    '<article class="card-lift flex flex-col overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm ring-1 ring-slate-900/5">' +
+                    '<a href="' +
+                    escapeHtml(p.url) +
+                    '" target="_blank" rel="noopener noreferrer" class="block shrink-0">' +
+                    img +
+                    "</a>" +
+                    '<div class="flex flex-1 flex-col p-5">' +
+                    '<p class="text-xs font-semibold uppercase tracking-wide text-violet-700">ВКонтакте</p>' +
+                    '<p class="mt-1 text-xs text-slate-500">' +
+                    fmtVkDate(p.date) +
+                    "</p>" +
+                    bodyHtml +
+                    '<a href="' +
+                    escapeHtml(p.url) +
+                    '" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex text-sm font-semibold text-blue-700 hover:text-blue-900">Открыть в VK →</a>' +
+                    "</div></article>"
+                  );
+                })
+                .join("");
+            return;
+          }
+
+          if (!data.configured) {
+            fallback.classList.remove("hidden");
+            fallback.innerHTML =
+              '<span class="block max-w-xl mx-auto">' +
+              (data.hint
+                ? escapeHtml(data.hint) +
+                  ' Или откройте сообщество вручную: <a href="https://vk.com/gapou_okei" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-700 hover:text-blue-900">vk.com/gapou_okei</a>.'
+                : '<a href="https://vk.com/gapou_okei" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-700 hover:text-blue-900">Открыть сообщество ГАПОУ ОКЭИ ВКонтакте →</a>') +
+              "</span>";
+            return;
+          }
+
+          if (!data.ok || !data.posts || !data.posts.length) {
+            fallback.classList.remove("hidden");
+            const msg = data.detail ? escapeHtml(data.detail) : "Записей пока нет или лента недоступна.";
+            fallback.innerHTML =
+              '<span class="block">' +
+              msg +
+              ' <a href="' +
+              escapeHtml(data.community_url || "https://vk.com/gapou_okei") +
+              '" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-700">Перейти в сообщество →</a></span>';
+            return;
+          }
+        } catch (e) {
+          loading.classList.add("hidden");
+          fallback.classList.remove("hidden");
+          fallback.textContent = "Не удалось загрузить ленту. Зайдите на сообщество напрямую.";
+        }
+      }
+
+      loadVkWall();
+    })();
+  </script>
+</body>
+</html>

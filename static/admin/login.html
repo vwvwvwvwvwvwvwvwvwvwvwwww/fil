@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Вход — воспитательный отдел ГАПОУ ОКЭИ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ["Fraunces", "Georgia", "serif"],
+            sans: ["Source Sans 3", "system-ui", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="/static/css/theme.css" />
+</head>
+<body class="min-h-screen bg-gradient-to-br from-[#f0f7ff] via-white to-blue-50/30 flex flex-col items-center justify-center p-4 font-sans">
+  <div class="mb-8 flex flex-col items-center text-center">
+    <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="72" height="72" class="mb-4 h-[4.5rem] w-[4.5rem] rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-slate-200" />
+    <p class="font-display text-lg font-semibold text-slate-900">ГАПОУ ОКЭИ</p>
+    <p class="text-xs text-slate-500">воспитательный отдел · администрирование сайта</p>
+  </div>
+  <div class="w-full max-w-md rounded-3xl border border-blue-100 bg-white p-8 shadow-xl shadow-blue-900/5 ring-1 ring-slate-900/5">
+    <h1 class="font-display text-2xl font-semibold text-slate-900">Вход сотрудника отдела</h1>
+    <p class="mt-2 text-sm text-slate-600">Заявки, мероприятия и материалы.</p>
+    <form id="form" class="mt-8 space-y-4" novalidate>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1" for="email">Email</label>
+        <input id="email" type="email" name="email" required maxlength="254" class="w-full rounded-xl border border-slate-200 px-3 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20" autocomplete="username" />
+        <p id="err-email" class="mt-1 text-xs text-red-600 hidden" role="alert"></p>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1" for="password">Пароль</label>
+        <input id="password" type="password" name="password" required minlength="4" class="w-full rounded-xl border border-slate-200 px-3 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20" autocomplete="current-password" />
+        <p id="err-password" class="mt-1 text-xs text-red-600 hidden" role="alert"></p>
+      </div>
+      <p id="msg" class="text-sm text-red-600 hidden"></p>
+      <button type="submit" id="btn" class="w-full rounded-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 font-semibold disabled:opacity-60">
+        Войти
+      </button>
+    </form>
+    <p class="mt-6 text-center text-sm space-y-2">
+      <span class="block"><a href="../index.html" class="text-slate-600 hover:text-blue-800">← На сайт для участников</a></span>
+    </p>
+  </div>
+  <script src="/static/js/form-validators.js"></script>
+  <script>
+    document.getElementById("form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById("btn");
+      const msg = document.getElementById("msg");
+      msg.classList.add("hidden");
+      btn.disabled = true;
+      const fd = new FormData(e.target);
+      const email = fd.get("email");
+      const password = fd.get("password");
+      const errEmail = document.getElementById("err-email");
+      const errPass = document.getElementById("err-password");
+      const inputEmail = document.getElementById("email");
+      const inputPass = document.getElementById("password");
+      if (!window.FormValidators.validateLogin(email, password, errEmail, errPass, inputEmail, inputPass)) {
+        btn.disabled = false;
+        return;
+      }
+      const body = { email, password };
+      try {
+        const res = await fetch("/api/admin/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify(body),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.csrf) {
+          sessionStorage.removeItem("csrf_volunteer");
+          try {
+            sessionStorage.removeItem("admin_me_cache");
+          } catch (_) {}
+          sessionStorage.setItem("csrf", data.csrf);
+          window.location.replace("/admin/dashboard.html");
+          return;
+        }
+        msg.textContent = data.detail || "Неверный email или пароль";
+        msg.classList.remove("hidden");
+      } catch {
+        msg.textContent = "Ошибка сети. Проверьте адрес сайта и что сервер запущен.";
+        msg.classList.remove("hidden");
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

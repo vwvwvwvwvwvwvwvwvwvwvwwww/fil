@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Событие — ГАПОУ ОКЭИ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: "#0f172a", mist: "#f0f7ff" },
+          fontFamily: {
+            display: ["Fraunces", "Georgia", "serif"],
+            sans: ["Source Sans 3", "system-ui", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="/static/css/theme.css" />
+</head>
+<body class="min-h-screen bg-[#f8fafc] font-sans text-ink antialiased">
+  <header class="sticky top-0 z-30 border-b border-blue-100/80 bg-white/85 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <a href="index.html" class="group flex items-center gap-3 min-w-0">
+        <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-0.5 shadow-md shadow-blue-600/20 ring-2 ring-white" />
+        <span class="leading-tight truncate">
+          <span class="font-display block text-lg font-semibold tracking-tight text-slate-900">ГАПОУ ОКЭИ</span>
+          <span class="text-xs font-medium text-slate-500">воспитательный отдел · волонтёрское направление</span>
+        </span>
+      </a>
+      <nav class="flex flex-wrap items-center gap-5 text-sm font-medium text-slate-600" aria-label="Основное меню">
+        <a href="about.html" class="nav-link hover:text-blue-700">О движении</a>
+        <a href="how.html" class="nav-link hover:text-blue-700">Как устроено</a>
+        <a href="events.html" class="nav-link font-semibold text-blue-700" aria-current="page">События</a>
+        <a href="college-news.html" class="nav-link hover:text-blue-700">Новости колледжа</a>
+        <a href="materials.html" class="nav-link hover:text-blue-700">Материалы</a>
+        <a href="faq.html" class="nav-link hover:text-blue-700">Вопросы</a>
+        <a href="/volunteer/login.html" class="nav-link hover:text-blue-700">Кабинет волонтёра</a>
+        <a href="apply.html" class="rounded-full bg-blue-600 px-4 py-2 text-white shadow-sm transition hover:bg-blue-700">Подать заявку</a>
+      </nav>
+    </div>
+    <div class="border-t border-blue-100/80 bg-mist/40">
+      <div class="max-w-6xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3 text-sm">
+        <nav class="text-slate-600">
+          <a href="events.html" class="font-medium text-blue-700 hover:text-blue-900">← Все события</a>
+          <span class="mx-2 text-slate-300">/</span>
+          <span class="text-slate-500">Карточка мероприятия</span>
+        </nav>
+        <span id="badge-status" class="hidden rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800 ring-1 ring-emerald-200">Опубликовано</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 py-10 md:py-14" id="main">
+    <p id="loading" class="rounded-2xl border border-dashed border-slate-200 bg-white px-6 py-16 text-center text-slate-500">Загружаем карточку события…</p>
+    <div id="content" class="hidden space-y-10">
+      <header class="relative overflow-hidden rounded-3xl border border-blue-100 bg-gradient-to-br from-white to-blue-50/80 p-8 md:p-10 shadow-sm ring-1 ring-slate-900/5">
+        <div class="absolute right-0 top-0 h-40 w-40 translate-x-10 -translate-y-10 rounded-full bg-blue-400/10 blur-3xl"></div>
+        <p class="text-xs font-bold uppercase tracking-wider text-blue-700">Мероприятие для волонтёров</p>
+        <h1 id="title" class="font-display relative mt-3 text-3xl font-semibold leading-tight text-slate-900 md:text-4xl"></h1>
+        <div class="relative mt-6 flex flex-wrap gap-4 text-sm text-slate-600">
+          <p id="dates" class="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 ring-1 ring-slate-200/80"></p>
+          <p id="loc" class="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 ring-1 ring-slate-200/80 empty:hidden"></p>
+        </div>
+        <div id="desc" class="relative mt-8 max-w-3xl whitespace-pre-wrap text-base leading-relaxed text-slate-700"></div>
+      </header>
+
+      <section class="rounded-3xl border border-slate-200 bg-white shadow-sm ring-1 ring-slate-900/5 overflow-hidden">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 bg-slate-50/80 px-6 py-4">
+          <div>
+            <h2 class="font-display text-lg font-semibold text-slate-900">Участники</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Список формируют координаторы; вы можете сохранить его для себя.</p>
+          </div>
+          <button type="button" id="csv" class="hidden rounded-full border border-blue-200 bg-white px-4 py-2 text-sm font-semibold text-blue-800 shadow-sm hover:bg-blue-50">
+            Скачать CSV
+          </button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm">
+            <thead class="border-b border-slate-100 bg-blue-50/50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+              <tr>
+                <th class="px-6 py-3">Имя в списке</th>
+                <th class="px-6 py-3">Роль на событии</th>
+              </tr>
+            </thead>
+            <tbody id="tbody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+        <p id="empty-parts" class="hidden px-6 py-10 text-center text-sm text-slate-500">
+          Пока никто не записан — возможно, регистрация только началась. Уточните у сотрудника воспитательного отдела ГАПОУ ОКЭИ.
+        </p>
+      </section>
+
+      <p class="text-center text-sm text-slate-500">
+        Вопросы по записи — на почту воспитательного отдела или в учебную часть колледжа (режим работы — уточняйте на сайте ГАПОУ ОКЭИ).
+      </p>
+    </div>
+    <p id="err" class="hidden rounded-2xl border border-red-100 bg-red-50 px-5 py-4 text-sm text-red-800"></p>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const id = params.get("id");
+    const loading = document.getElementById("loading");
+    const content = document.getElementById("content");
+    const err = document.getElementById("err");
+
+    function fmt(iso) {
+      try {
+        const d = new Date(iso);
+        return d.toLocaleString("ru-RU", { dateStyle: "long", timeStyle: "short" });
+      } catch { return iso; }
+    }
+
+    let exportRows = [];
+
+    document.getElementById("csv").addEventListener("click", () => {
+      if (!exportRows.length) return;
+      const esc = (s) => `"${String(s).replace(/"/g, '""')}"`;
+      const lines = [["Имя", "Роль"].map(esc).join(",")];
+      exportRows.forEach((r) => lines.push([r.name, r.role].map(esc).join(",")));
+      const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `participants_event_${id}.csv`;
+      a.click();
+    });
+
+    (async () => {
+      if (!id) {
+        loading.classList.add("hidden");
+        err.textContent = "В адресе страницы не указан номер события. Откройте карточку из календаря на странице «События».";
+        err.classList.remove("hidden");
+        return;
+      }
+      try {
+        const res = await fetch("/api/events/" + encodeURIComponent(id));
+        if (!res.ok) throw new Error();
+        const ev = await res.json();
+        loading.classList.add("hidden");
+        content.classList.remove("hidden");
+        document.getElementById("badge-status").classList.remove("hidden");
+
+        document.getElementById("title").textContent = ev.title;
+        let dateStr = fmt(ev.date_start);
+        if (ev.date_end) dateStr += " — " + fmt(ev.date_end);
+        document.getElementById("dates").textContent = dateStr;
+        const locEl = document.getElementById("loc");
+        if (ev.location) {
+          locEl.textContent = ev.location;
+        } else {
+          locEl.classList.add("hidden");
+        }
+        document.getElementById("desc").textContent = ev.description || "Подробное описание добавят организаторы. Следите за объявлениями воспитательного отдела и официальными каналами колледжа.";
+
+        const tbody = document.getElementById("tbody");
+        const empty = document.getElementById("empty-parts");
+        const parts = ev.participants || [];
+        exportRows = parts.map((p) => ({ name: p.display_name, role: p.role_in_event }));
+        if (parts.length) {
+          document.getElementById("csv").classList.remove("hidden");
+          tbody.innerHTML = parts.map((p) => `
+            <tr class="hover:bg-blue-50/40 transition">
+              <td class="px-6 py-3 font-medium text-slate-900">${escapeHtml(p.display_name)}</td>
+              <td class="px-6 py-3 text-slate-600">${escapeHtml(p.role_in_event)}</td>
+            </tr>
+          `).join("");
+        } else {
+          empty.classList.remove("hidden");
+        }
+      } catch {
+        loading.classList.add("hidden");
+        err.textContent = "Событие не найдено или снято с публикации.";
+        err.classList.remove("hidden");
+      }
+    })();
+
+    function escapeHtml(s) {
+      const d = document.createElement("div");
+      d.textContent = s;
+      return d.innerHTML;
+    }
+  </script>
+</body>
+</html>

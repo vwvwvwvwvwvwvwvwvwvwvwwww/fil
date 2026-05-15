@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Заявки</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="/static/js/admin-auth.js"></script>
+  <script src="/static/js/admin-staff-nav.js"></script>
+  <style>body { font-family: Inter, system-ui, sans-serif; }</style>
+</head>
+<body class="bg-[#F0F7FF] min-h-screen" data-staff-page="applications">
+  <header class="border-b border-blue-100 bg-white">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-3">
+      <a href="../index.html" class="flex items-center gap-3 shrink-0 rounded-lg pr-1 hover:opacity-90 transition">
+        <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="36" height="36" class="h-9 w-9 rounded-xl bg-white object-contain ring-1 ring-slate-200" />
+        <span class="leading-tight">
+          <span class="font-display block font-semibold text-slate-900">ГАПОУ ОКЭИ</span>
+          <span class="text-xs text-slate-500">восп. отдел</span>
+        </span>
+      </a>
+      <nav class="flex flex-wrap gap-3 text-sm">
+        <a href="/admin/dashboard.html" class="text-gray-600 hover:text-blue-600">Статистика</a>
+        <a href="/admin/applications.html" data-staff-nav="applications" class="font-medium text-blue-700">Заявки</a>
+        <a href="/admin/events.html" data-staff-nav="content" class="text-gray-600 hover:text-blue-600">Мероприятия</a>
+        <a href="/admin/blog.html" data-staff-nav="content" class="text-gray-600 hover:text-blue-600">Блог</a>
+        <button type="button" id="logout" class="text-red-600">Выйти</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="flex flex-wrap gap-4 items-end justify-between mb-6">
+      <h1 class="text-2xl font-bold">Заявки волонтёров</h1>
+      <div class="flex gap-2 flex-wrap items-center">
+        <label class="text-sm text-gray-600">Статус</label>
+        <select id="filter" class="rounded-lg border border-gray-200 px-3 py-2 text-sm">
+          <option value="">Все</option>
+          <option value="pending">На рассмотрении</option>
+          <option value="approved">Одобрено</option>
+          <option value="rejected">Отклонено</option>
+        </select>
+        <input id="search" type="search" placeholder="Поиск по email/ФИО…" class="rounded-lg border border-gray-200 px-3 py-2 text-sm min-w-[200px]" />
+      </div>
+    </div>
+
+    <div class="bg-white border border-blue-100 shadow-sm rounded-xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-blue-50 text-sm">
+          <thead class="bg-[#F0F7FF] text-left text-gray-600">
+            <tr>
+              <th class="px-4 py-3 font-medium">ФИО</th>
+              <th class="px-4 py-3 font-medium">Email</th>
+              <th class="px-4 py-3 font-medium">Телефон</th>
+              <th class="px-4 py-3 font-medium">Статус</th>
+              <th class="px-4 py-3 font-medium">Действия</th>
+            </tr>
+          </thead>
+          <tbody id="tbody" class="divide-y divide-blue-50"></tbody>
+        </table>
+      </div>
+      <p id="empty" class="px-4 py-8 text-gray-500 hidden">Нет заявок.</p>
+    </div>
+    <p id="msg" class="mt-4 text-sm hidden"></p>
+  </main>
+
+  <script>
+    let rows = [];
+
+    document.getElementById("logout").addEventListener("click", async () => {
+      await adminAuth.fetch("/api/admin/logout", { method: "POST" });
+      sessionStorage.removeItem("csrf");
+      if (adminAuth.invalidateMeCache) adminAuth.invalidateMeCache();
+      window.location.href = "/admin/login.html";
+    });
+
+    function statusRu(s) {
+      return { pending: "На рассмотрении", approved: "Одобрено", rejected: "Отклонено" }[s] || s;
+    }
+
+    function render() {
+      const f = document.getElementById("filter").value;
+      const q = document.getElementById("search").value.trim().toLowerCase();
+      const filtered = rows.filter((r) => {
+        if (f && r.status !== f) return false;
+        if (!q) return true;
+        return (
+          r.full_name.toLowerCase().includes(q) ||
+          r.email.toLowerCase().includes(q) ||
+          (r.phone || "").toLowerCase().includes(q)
+        );
+      });
+      const tbody = document.getElementById("tbody");
+      const empty = document.getElementById("empty");
+      if (!filtered.length) {
+        tbody.innerHTML = "";
+        empty.classList.remove("hidden");
+        return;
+      }
+      empty.classList.add("hidden");
+      tbody.innerHTML = filtered
+        .map(
+          (r) => `
+        <tr class="hover:bg-blue-50/40">
+          <td class="px-4 py-3">${r.full_name}</td>
+          <td class="px-4 py-3">${r.email}</td>
+          <td class="px-4 py-3">${r.phone || "—"}</td>
+          <td class="px-4 py-3">${statusRu(r.status)}</td>
+          <td class="px-4 py-3 space-x-2 whitespace-nowrap">
+            ${
+              r.status === "pending"
+                ? `<button data-id="${r.id}" data-act="approved" class="text-green-600 hover:underline">Одобрить</button>
+                   <button data-id="${r.id}" data-act="rejected" class="text-red-600 hover:underline">Отклонить</button>`
+                : `<button data-id="${r.id}" data-act="pending" class="text-gray-500 hover:underline text-xs">В ожидание</button>`
+            }
+          </td>
+        </tr>
+      `
+        )
+        .join("");
+    }
+
+    document.getElementById("filter").addEventListener("change", render);
+    document.getElementById("search").addEventListener("input", render);
+
+    document.getElementById("tbody").addEventListener("click", async (e) => {
+      const btn = e.target.closest("button[data-act]");
+      if (!btn) return;
+      const id = btn.getAttribute("data-id");
+      const status = btn.getAttribute("data-act");
+      const msg = document.getElementById("msg");
+      msg.classList.add("hidden");
+      try {
+        const res = await adminAuth.fetch(`/api/admin/applications/${id}/status`, {
+          method: "PUT",
+          body: JSON.stringify({ status }),
+        });
+        if (!res.ok) throw new Error(await adminAuth.parseError(res));
+        const updated = await res.json();
+        rows = rows.map((x) => (x.id === updated.id ? updated : x));
+        render();
+        msg.textContent = "Сохранено";
+        msg.className = "mt-4 text-sm text-green-600";
+        msg.classList.remove("hidden");
+      } catch (err) {
+        if (err.message === "unauthorized") return;
+        msg.textContent = err.message;
+        msg.className = "mt-4 text-sm text-red-600";
+        msg.classList.remove("hidden");
+      }
+    });
+
+    (async () => {
+      try {
+        const res = await adminAuth.fetch("/api/admin/applications");
+        if (!res.ok) throw new Error(await adminAuth.parseError(res));
+        rows = await res.json();
+        render();
+      } catch (e) {
+        if (e.message !== "unauthorized") alert(e.message);
+      }
+    })();
+  </script>
+</body>
+</html>

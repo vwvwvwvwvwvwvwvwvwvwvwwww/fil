@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Личный кабинет волонтёра ГАПОУ ОКЭИ: профиль и ваши мероприятия." />
+  <title>Мой кабинет — волонтёр ГАПОУ ОКЭИ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: "#0f172a", mist: "#f0f7ff" },
+          fontFamily: {
+            display: ["Fraunces", "Georgia", "serif"],
+            sans: ["Source Sans 3", "system-ui", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="/static/css/theme.css" />
+</head>
+<body class="min-h-screen bg-gradient-to-b from-mist via-white to-slate-50 font-sans text-slate-900 antialiased">
+  <header class="sticky top-0 z-30 border-b border-blue-100/90 bg-white/90 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <a href="/index.html" class="flex items-center gap-3 rounded-xl pr-1 hover:opacity-95 transition">
+        <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="40" height="40" class="h-10 w-10 rounded-2xl bg-white object-contain ring-1 ring-slate-200 shadow-sm" />
+        <span class="leading-tight">
+          <span class="font-display block text-sm font-semibold text-slate-900">Личный кабинет волонтёра</span>
+          <span class="text-xs text-slate-500">ГАПОУ ОКЭИ · воспитательный отдел</span>
+        </span>
+      </a>
+      <nav class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-medium">
+        <a href="/events.html" class="text-blue-700 hover:text-blue-900">События</a>
+        <a href="/materials.html" class="text-slate-600 hover:text-blue-700">Материалы</a>
+        <a href="/faq.html" class="text-slate-600 hover:text-blue-700">Вопросы</a>
+        <button type="button" id="logout" class="text-red-600 hover:text-red-800">Выйти</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8 md:py-12">
+    <div id="loading" class="rounded-2xl border border-blue-100 bg-white px-6 py-14 text-center shadow-sm">
+      <p class="text-slate-600 text-sm">Загрузка профиля…</p>
+      <div class="mx-auto mt-4 h-1.5 max-w-xs overflow-hidden rounded-full bg-slate-100">
+        <div class="h-full w-1/3 animate-pulse rounded-full bg-blue-500/70"></div>
+      </div>
+    </div>
+
+    <div id="err-panel" class="hidden rounded-2xl border border-red-100 bg-red-50 px-6 py-8 text-center">
+      <p class="font-display text-lg font-semibold text-red-900">Не удалось загрузить данные</p>
+      <p class="mt-2 text-sm text-red-800/90">Проверьте подключение и попробуйте снова.</p>
+      <button type="button" id="retry-btn" class="mt-5 rounded-full bg-red-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-800">
+        Повторить
+      </button>
+    </div>
+
+    <div id="content" class="hidden space-y-10 md:space-y-12">
+      <section class="relative overflow-hidden rounded-3xl border border-blue-100 bg-white shadow-lg shadow-blue-900/[0.06] ring-1 ring-slate-900/5">
+        <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-600"></div>
+        <div class="px-6 py-8 md:px-10 md:py-10 md:flex md:items-start md:gap-10">
+          <div class="flex shrink-0 justify-center md:justify-start">
+            <div id="avatar" class="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-2xl font-bold tracking-tight text-white shadow-md shadow-blue-900/25 md:h-24 md:w-24 md:text-3xl" aria-hidden="true"></div>
+          </div>
+          <div class="mt-6 flex-1 text-center md:mt-0 md:text-left">
+            <p class="text-xs font-semibold uppercase tracking-wide text-blue-700">Добро пожаловать</p>
+            <h1 class="font-display mt-2 text-2xl font-semibold text-slate-900 md:text-3xl" id="welcome"></h1>
+            <p class="mt-3 max-w-2xl text-sm text-slate-600">
+              Контакты и мероприятия, на которые вас записали.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="quick-heading">
+        <h2 id="quick-heading" class="sr-only">Быстрые разделы</h2>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <a href="/events.html" class="card-lift group rounded-2xl border border-blue-100 bg-white p-5 shadow-sm ring-1 ring-slate-900/5">
+            <p class="text-xs font-semibold uppercase tracking-wide text-blue-700">Календарь</p>
+            <p class="font-display mt-2 text-lg font-semibold text-slate-900 group-hover:text-blue-800">Все события</p>
+            <p class="mt-2 text-sm text-slate-600">Анонсы и календарь.</p>
+            <span class="mt-4 inline-flex text-sm font-semibold text-blue-700">Открыть →</span>
+          </a>
+          <a href="/materials.html" class="card-lift group rounded-2xl border border-blue-100 bg-white p-5 shadow-sm ring-1 ring-slate-900/5">
+            <p class="text-xs font-semibold uppercase tracking-wide text-blue-700">Отдел</p>
+            <p class="font-display mt-2 text-lg font-semibold text-slate-900 group-hover:text-blue-800">Материалы</p>
+            <p class="mt-2 text-sm text-slate-600">Публикации отдела.</p>
+            <span class="mt-4 inline-flex text-sm font-semibold text-blue-700">Открыть →</span>
+          </a>
+          <a href="/faq.html" class="card-lift group rounded-2xl border border-blue-100 bg-white p-5 shadow-sm ring-1 ring-slate-900/5">
+            <p class="text-xs font-semibold uppercase tracking-wide text-blue-700">Помощь</p>
+            <p class="font-display mt-2 text-lg font-semibold text-slate-900 group-hover:text-blue-800">Частые вопросы</p>
+            <p class="mt-2 text-sm text-slate-600">Справки и участие.</p>
+            <span class="mt-4 inline-flex text-sm font-semibold text-blue-700">Открыть →</span>
+          </a>
+          <a href="/college-news.html" class="card-lift group rounded-2xl border border-blue-100 bg-white p-5 shadow-sm ring-1 ring-slate-900/5">
+            <p class="text-xs font-semibold uppercase tracking-wide text-blue-700">Колледж</p>
+            <p class="font-display mt-2 text-lg font-semibold text-slate-900 group-hover:text-blue-800">Новости</p>
+            <p class="mt-2 text-sm text-slate-600">Сайт колледжа и ВК.</p>
+            <span class="mt-4 inline-flex text-sm font-semibold text-blue-700">Открыть →</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-blue-100 bg-white p-6 shadow-md shadow-blue-900/[0.04] ring-1 ring-slate-900/5 md:p-8">
+        <h2 class="font-display text-xl font-semibold text-slate-900">Ваши контакты в системе</h2>
+        <p class="mt-1 text-sm text-slate-500">Для смены телефона обратитесь в отдел.</p>
+        <dl class="mt-6 grid gap-6 sm:grid-cols-2">
+          <div class="rounded-2xl border border-slate-100 bg-slate-50/80 px-4 py-4">
+            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-500">Электронная почта</dt>
+            <dd class="mt-2 text-base font-medium text-slate-900 break-all" id="field-email"></dd>
+          </div>
+          <div class="rounded-2xl border border-slate-100 bg-slate-50/80 px-4 py-4">
+            <dt class="text-xs font-semibold uppercase tracking-wide text-slate-500">Телефон</dt>
+            <dd class="mt-2 text-base font-medium text-slate-900" id="field-phone"></dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="pattern-grid rounded-3xl border border-blue-100 px-4 py-10 md:px-8 md:py-12">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <div class="rule-accent mb-4"></div>
+            <h2 class="font-display text-2xl font-semibold text-slate-900">Мои мероприятия</h2>
+            <p class="mt-2 max-w-2xl text-sm text-slate-600">
+              Список формирует куратор.
+            </p>
+          </div>
+          <p id="events-count" class="badge-soft hidden" aria-live="polite"></p>
+        </div>
+
+        <div id="events-wrap" class="mt-8 space-y-10"></div>
+
+        <div id="events-empty" class="hidden mt-8 rounded-2xl border border-dashed border-blue-200 bg-white/90 px-6 py-12 text-center shadow-sm">
+          <p class="font-display text-lg font-semibold text-slate-800">Пока нет записанных мероприятий</p>
+          <p class="mx-auto mt-2 max-w-md text-sm text-slate-600">
+            Список появится после записи куратора. Календарь — в «Событиях».
+          </p>
+          <a href="/events.html" class="mt-6 inline-flex rounded-full bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700">
+            Перейти к календарю
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="border-t border-blue-100 bg-white/80 mt-4">
+    <div class="max-w-6xl mx-auto px-4 py-8 text-center text-xs text-slate-500">
+      <a href="/index.html" class="text-blue-700 hover:underline">На главную</a>
+      <span class="mx-2 text-slate-300">·</span>
+      <a href="/staff.html" class="text-slate-600 hover:text-blue-700">Справка</a>
+    </div>
+  </footer>
+
+  <script src="/static/js/volunteer-auth.js"></script>
+  <script>
+    document.getElementById("logout").addEventListener("click", async () => {
+      await volunteerAuth.fetch("/api/volunteer/logout", { method: "POST" });
+      sessionStorage.removeItem("csrf_volunteer");
+      window.location.href = "/volunteer/login.html";
+    });
+
+    document.getElementById("retry-btn").addEventListener("click", () => load());
+
+    function initials(name) {
+      const parts = String(name || "")
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+      if (!parts.length) return "?";
+      if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+
+    function escapeHtml(s) {
+      const d = document.createElement("div");
+      d.textContent = s == null ? "" : String(s);
+      return d.innerHTML;
+    }
+
+    function formatWhen(ev) {
+      try {
+        const a = new Date(ev.date_start);
+        return a.toLocaleString("ru-RU", { dateStyle: "long", timeStyle: "short" });
+      } catch {
+        return "";
+      }
+    }
+
+    function formatWhenShort(iso) {
+      try {
+        return new Date(iso).toLocaleString("ru-RU", { dateStyle: "medium", timeStyle: "short" });
+      } catch {
+        return "";
+      }
+    }
+
+    function partitionEvents(evs) {
+      const now = Date.now();
+      const upcoming = [];
+      const past = [];
+      for (const ev of evs) {
+        const t = new Date(ev.date_start).getTime();
+        if (Number.isNaN(t)) {
+          past.push(ev);
+          continue;
+        }
+        if (t >= now) upcoming.push(ev);
+        else past.push(ev);
+      }
+      upcoming.sort((a, b) => new Date(a.date_start) - new Date(b.date_start));
+      past.sort((a, b) => new Date(b.date_start) - new Date(a.date_start));
+      return { upcoming, past };
+    }
+
+    function eventCard(ev, variant) {
+      const accent =
+        variant === "upcoming"
+          ? "border-l-4 border-l-blue-600 bg-white"
+          : "border-l-4 border-l-slate-300 bg-white";
+      const badge =
+        variant === "upcoming"
+          ? '<span class="badge-soft shrink-0">Предстоящее</span>'
+          : '<span class="inline-flex shrink-0 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-slate-600">Прошедшее</span>';
+
+      const loc = ev.location ? '<p class="mt-2 flex flex-wrap items-start gap-2 text-sm text-slate-600"><span class="font-medium text-slate-500">Место:</span> ' + escapeHtml(ev.location) + "</p>" : "";
+
+      let endLine = "";
+      if (ev.date_end) {
+        endLine =
+          '<p class="mt-1 text-xs text-slate-500">Окончание: ' + escapeHtml(formatWhenShort(ev.date_end)) + "</p>";
+      }
+
+      return (
+        '<article class="card-lift rounded-2xl border border-blue-100 p-5 shadow-sm ring-1 ring-slate-900/5 ' +
+        accent +
+        '">' +
+        '<div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">' +
+        '<div class="min-w-0 flex-1">' +
+        '<div class="flex flex-wrap items-center gap-2">' +
+        badge +
+        "</div>" +
+        '<h3 class="font-display mt-3 text-xl font-semibold text-slate-900">' +
+        escapeHtml(ev.title) +
+        "</h3>" +
+        '<p class="mt-2 text-sm font-medium text-blue-800">' +
+        escapeHtml(formatWhen(ev)) +
+        "</p>" +
+        loc +
+        endLine +
+        '<p class="mt-3 text-sm text-slate-600"><span class="text-slate-400">Ваша роль:</span> ' +
+        escapeHtml(ev.role_in_event || "участник") +
+        "</p>" +
+        "</div>" +
+        '<a href="/event.html?id=' +
+        encodeURIComponent(ev.id) +
+        '" class="shrink-0 rounded-full border border-blue-200 bg-blue-50/80 px-5 py-2.5 text-center text-sm font-semibold text-blue-800 hover:bg-blue-100">' +
+        "Подробнее о событии" +
+        "</a>" +
+        "</div></article>"
+      );
+    }
+
+    function renderSection(title, subtitle, items, variant) {
+      if (!items.length) return "";
+      const cards = items.map((ev) => eventCard(ev, variant)).join("");
+      return (
+        '<div>' +
+        '<h3 class="font-display text-lg font-semibold text-slate-900">' +
+        escapeHtml(title) +
+        "</h3>" +
+        (subtitle ? '<p class="mt-1 text-sm text-slate-600">' + escapeHtml(subtitle) + "</p>" : "") +
+        '<div class="mt-4 space-y-4">' +
+        cards +
+        "</div></div>"
+      );
+    }
+
+    async function load() {
+      document.getElementById("loading").classList.remove("hidden");
+      document.getElementById("err-panel").classList.add("hidden");
+      document.getElementById("content").classList.add("hidden");
+
+      try {
+        const res = await volunteerAuth.fetch("/api/volunteer/me");
+        if (!res.ok) throw new Error("fail");
+        const data = await res.json();
+
+        document.getElementById("loading").classList.add("hidden");
+        document.getElementById("content").classList.remove("hidden");
+
+        document.getElementById("welcome").textContent = data.full_name ? "Здравствуйте, " + data.full_name + "!" : "Здравствуйте!";
+        document.getElementById("avatar").textContent = initials(data.full_name);
+        document.getElementById("field-email").textContent = data.email || "—";
+        document.getElementById("field-phone").textContent = data.phone || "—";
+
+        const wrap = document.getElementById("events-wrap");
+        const empty = document.getElementById("events-empty");
+        const countEl = document.getElementById("events-count");
+        const evs = data.events || [];
+
+        if (!evs.length) {
+          wrap.innerHTML = "";
+          empty.classList.remove("hidden");
+          countEl.classList.add("hidden");
+          return;
+        }
+
+        empty.classList.add("hidden");
+        const { upcoming, past } = partitionEvents(evs);
+
+        let html = "";
+        html += renderSection(
+          "Предстоящие",
+          "Ближайшие по дате начала.",
+          upcoming,
+          "upcoming"
+        );
+        html += renderSection(
+          "Архив",
+          "Мероприятия, которые уже прошли.",
+          past,
+          "past"
+        );
+        wrap.innerHTML = html || "";
+
+        const total = upcoming.length + past.length;
+        countEl.textContent = upcoming.length
+          ? "Предстоящих: " + upcoming.length + (past.length ? " · Всего в списке: " + total : "")
+          : "В списке: " + total;
+        countEl.classList.remove("hidden");
+      } catch (e) {
+        if (e.message === "unauthorized") return;
+        document.getElementById("loading").classList.add("hidden");
+        document.getElementById("err-panel").classList.remove("hidden");
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>

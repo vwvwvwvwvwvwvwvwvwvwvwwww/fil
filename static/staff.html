@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Справочный центр ГАПОУ ОКЭИ: личный кабинет волонтёра, работа воспитательного отдела с платформой, роли и безопасный доступ." />
+  <title>Справочный центр — участники и сотрудники · ГАПОУ ОКЭИ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: "#0f172a", mist: "#f0f7ff" },
+          fontFamily: {
+            display: ["Fraunces", "Georgia", "serif"],
+            sans: ["Source Sans 3", "system-ui", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="/static/css/theme.css" />
+</head>
+<body class="bg-white font-sans text-ink antialiased">
+  <header class="sticky top-0 z-30 border-b border-blue-100/80 bg-white/85 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <a href="index.html" class="group flex items-center gap-3">
+        <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-0.5 shadow-md shadow-blue-600/20 ring-2 ring-white" />
+        <span class="leading-tight">
+          <span class="font-display block text-lg font-semibold tracking-tight text-slate-900">ГАПОУ ОКЭИ</span>
+          <span class="text-xs font-medium text-slate-500">воспитательный отдел · справочный центр</span>
+        </span>
+      </a>
+      <nav class="flex flex-wrap items-center gap-5 text-sm font-medium text-slate-600" aria-label="Основное меню">
+        <a href="index.html" class="nav-link hover:text-blue-700">Главная</a>
+        <a href="about.html" class="nav-link hover:text-blue-700">О движении</a>
+        <a href="how.html" class="nav-link hover:text-blue-700">Как устроено</a>
+        <a href="events.html" class="nav-link hover:text-blue-700">События</a>
+        <a href="college-news.html" class="nav-link hover:text-blue-700">Новости колледжа</a>
+        <a href="faq.html" class="nav-link hover:text-blue-700">Вопросы</a>
+        <a href="/volunteer/login.html" class="nav-link hover:text-blue-700">Кабинет волонтёра</a>
+        <a href="apply.html" class="rounded-full bg-blue-600 px-4 py-2 text-white shadow-sm transition hover:bg-blue-700">Подать заявку</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="pattern-fade border-b border-blue-100/80">
+    <div class="max-w-6xl mx-auto px-4 py-12 md:py-16 lg:grid lg:grid-cols-12 lg:gap-10 lg:items-start">
+      <div class="lg:col-span-7">
+        <p class="badge-soft mb-4">Доступ к платформе</p>
+        <h1 class="font-display text-3xl md:text-4xl lg:text-[2.35rem] font-semibold leading-tight text-slate-900">
+          Справочный центр для участников и сотрудников отдела
+        </h1>
+        <p class="mt-5 text-lg text-slate-600 leading-relaxed max-w-xl">
+          Роли на сайте, путь волонтёра и работа отдела с заявками и мероприятиями.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/volunteer/login.html" class="inline-flex items-center justify-center rounded-full bg-slate-800 px-6 py-3 text-[15px] font-semibold text-white shadow-lg shadow-slate-900/15 transition hover:bg-slate-900">
+            Личный кабинет волонтёра
+          </a>
+          <a href="apply.html" class="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-6 py-3 text-[15px] font-semibold text-slate-800 transition hover:border-blue-400 hover:text-blue-800">
+            Заполнить анкету
+          </a>
+        </div>
+      </div>
+      <aside class="mt-10 lg:col-span-5 lg:mt-2 rounded-2xl border border-blue-100 bg-white p-6 shadow-sm ring-1 ring-slate-900/5">
+        <p class="text-xs font-bold uppercase tracking-wide text-blue-700">На этой странице</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a href="#roles" class="text-blue-700 hover:text-blue-900 font-medium">Роли на платформе</a></li>
+          <li><a href="#volunteer-path" class="text-slate-600 hover:text-blue-700">Путь волонтёра</a></li>
+          <li><a href="#cabinet-info" class="text-slate-600 hover:text-blue-700">Личный кабинет</a></li>
+          <li><a href="#department" class="text-slate-600 hover:text-blue-700">Работа отдела на сайте</a></li>
+          <li><a href="#advisor-panel" class="text-slate-600 hover:text-blue-700">Панель для советников</a></li>
+          <li><a href="#faq-section" class="text-slate-600 hover:text-blue-700">Вопросы и ссылки</a></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <nav class="sticky top-[4.25rem] z-20 border-b border-blue-100/90 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 shadow-sm shadow-blue-900/[0.03]" aria-label="Разделы страницы">
+    <div class="max-w-6xl mx-auto px-4 py-3 overflow-x-auto">
+      <div class="flex flex-wrap gap-2 min-w-0 text-xs sm:text-sm font-medium">
+        <a href="#roles" class="shrink-0 rounded-full border border-blue-100 bg-mist/60 px-3 py-1.5 text-slate-700 hover:border-blue-200 hover:bg-white">Роли</a>
+        <a href="#volunteer-path" class="shrink-0 rounded-full border border-transparent px-3 py-1.5 text-slate-600 hover:bg-blue-50 hover:text-blue-800">Путь волонтёра</a>
+        <a href="#cabinet-info" class="shrink-0 rounded-full border border-transparent px-3 py-1.5 text-slate-600 hover:bg-blue-50 hover:text-blue-800">Кабинет</a>
+        <a href="#department" class="shrink-0 rounded-full border border-transparent px-3 py-1.5 text-slate-600 hover:bg-blue-50 hover:text-blue-800">Отдел</a>
+        <a href="#advisor-panel" class="shrink-0 rounded-full border border-transparent px-3 py-1.5 text-slate-600 hover:bg-blue-50 hover:text-blue-800">Советники</a>
+        <a href="#faq-section" class="shrink-0 rounded-full border border-transparent px-3 py-1.5 text-slate-600 hover:bg-blue-50 hover:text-blue-800">FAQ</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section id="roles" class="scroll-mt-28 border-b border-blue-100 bg-white py-14 md:py-16">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="rule-accent mb-5"></div>
+        <h2 class="font-display text-2xl md:text-3xl font-semibold text-slate-900">Роли на платформе</h2>
+        <p class="mt-3 max-w-3xl text-slate-600 leading-relaxed">
+          Один и тот же сайт по-разному доступен гостю, одобренному волонтёру и сотруднику отдела с правами советника. Ниже — что можно делать без входа и после входа.
+        </p>
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
+          <article class="rounded-2xl border border-slate-200 bg-slate-50/80 p-6 ring-1 ring-slate-900/5">
+            <p class="text-xs font-bold uppercase tracking-wide text-slate-500">Гость</p>
+            <h3 class="font-display mt-2 text-lg font-semibold text-slate-900">Без учётной записи</h3>
+            <ul class="mt-4 space-y-2 text-sm text-slate-600">
+              <li>· Просмотр разделов сайта, календаря событий, новостей и материалов.</li>
+              <li>· Подача анкеты волонтёра.</li>
+              <li>· Нет доступа к личному кабинету и к закрытым данным.</li>
+            </ul>
+          </article>
+          <article class="rounded-2xl border border-blue-200 bg-white p-6 shadow-md shadow-blue-900/5 ring-1 ring-blue-100">
+            <p class="text-xs font-bold uppercase tracking-wide text-blue-700">Волонтёр</p>
+            <h3 class="font-display mt-2 text-lg font-semibold text-slate-900">После одобрения заявки</h3>
+            <ul class="mt-4 space-y-2 text-sm text-slate-600">
+              <li>· Вход в личный кабинет по email и паролю (или первый вход — создание пароля).</li>
+              <li>· Просмотр своих контактов и списка мероприятий, где вы участник.</li>
+              <li>· Публичная часть сайта остаётся доступна как всем посетителям.</li>
+            </ul>
+          </article>
+          <article class="rounded-2xl border border-indigo-100 bg-indigo-50/40 p-6 ring-1 ring-indigo-100/80">
+            <p class="text-xs font-bold uppercase tracking-wide text-indigo-700">Советник отдела</p>
+            <h3 class="font-display mt-2 text-lg font-semibold text-slate-900">Служебная панель</h3>
+            <ul class="mt-4 space-y-2 text-sm text-slate-600">
+              <li>· Работа с заявками, мероприятиями и публикациями.</li>
+              <li>· Вход по выданным данным.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="volunteer-path" class="scroll-mt-28 pattern-grid border-b border-blue-100 py-14 md:py-18">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="rule-accent mb-5"></div>
+        <h2 class="font-display text-2xl md:text-3xl font-semibold text-slate-900">Путь волонтёра: от анкеты до кабинета</h2>
+        <p class="mt-3 max-w-3xl text-slate-600 leading-relaxed">
+          Личный кабинет дополняет, но не заменяет живое общение с куратором: в нём удобно видеть учётную запись и события, к которым вас подключили в системе.
+        </p>
+        <ol class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          <li class="relative rounded-2xl border border-white/90 bg-white/95 p-5 shadow-sm backdrop-blur-sm">
+            <span class="absolute -top-3 left-5 rounded-full bg-blue-600 px-2.5 py-0.5 text-xs font-bold text-white">Шаг 1</span>
+            <p class="mt-2 font-semibold text-slate-900">Анкета на сайте</p>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600">ФИО, email, при желании телефон и немного о том, почему хотите участвовать.</p>
+          </li>
+          <li class="relative rounded-2xl border border-white/90 bg-white/95 p-5 shadow-sm backdrop-blur-sm">
+            <span class="absolute -top-3 left-5 rounded-full bg-blue-600 px-2.5 py-0.5 text-xs font-bold text-white">Шаг 2</span>
+            <p class="mt-2 font-semibold text-slate-900">Решение отдела</p>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600">Проверка заявки и ответ на почту; загляните в «Спам», если долго нет письма.</p>
+          </li>
+          <li class="relative rounded-2xl border border-white/90 bg-white/95 p-5 shadow-sm backdrop-blur-sm">
+            <span class="absolute -top-3 left-5 rounded-full bg-blue-600 px-2.5 py-0.5 text-xs font-bold text-white">Шаг 3</span>
+            <p class="mt-2 font-semibold text-slate-900">Учётная запись</p>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600">После одобрения создаётся роль «волонтёр». Первый раз задайте пароль в блоке «Первый вход».</p>
+          </li>
+          <li class="relative rounded-2xl border border-white/90 bg-white/95 p-5 shadow-sm backdrop-blur-sm">
+            <span class="absolute -top-3 left-5 rounded-full bg-blue-600 px-2.5 py-0.5 text-xs font-bold text-white">Шаг 4</span>
+            <p class="mt-2 font-semibold text-slate-900">Кабинет и календарь</p>
+            <p class="mt-2 text-sm leading-relaxed text-slate-600">В кабинете — ваши данные и «мои» события; полный календарь публикаций — в разделе «События».</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="cabinet-info" class="scroll-mt-28 border-b border-blue-100 bg-white py-14 md:py-18">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="grid gap-10 lg:grid-cols-2 lg:gap-14">
+          <div>
+            <h2 class="font-display text-2xl font-semibold text-slate-900">Что доступно в личном кабинете волонтёра</h2>
+            <ul class="mt-6 space-y-4 text-slate-600">
+              <li class="flex gap-3">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-600"></span>
+                <span><strong class="text-slate-800">Профиль.</strong> ФИО и контакты учётной записи после одобрения заявки.</span>
+              </li>
+              <li class="flex gap-3">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-600"></span>
+                <span><strong class="text-slate-800">Мои мероприятия.</strong> События, где вы закреплены в системе (куратор добавляет участников при необходимости).</span>
+              </li>
+              <li class="flex gap-3">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-600"></span>
+                <span><strong class="text-slate-800">Безопасность.</strong> На общих компьютерах всегда выходите из сессии кнопкой «Выйти».</span>
+              </li>
+            </ul>
+            <div class="mt-8 rounded-xl border border-blue-100 bg-mist/60 px-5 py-4">
+              <p class="text-sm font-semibold text-slate-900">Справки и часы волонтёрства</p>
+              <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                Оформление справок, учёт часов и организационные вопросы решаются через воспитательный отдел и кураторов — см.
+                <a href="how.html" class="font-medium text-blue-700 hover:text-blue-900">«Как устроено»</a>
+                и <a href="faq.html" class="font-medium text-blue-700 hover:text-blue-900">FAQ</a>.
+              </p>
+            </div>
+          </div>
+          <div class="rounded-3xl border border-slate-200 bg-slate-50/90 p-8 ring-1 ring-slate-900/5">
+            <h3 class="font-display text-xl font-semibold text-slate-900">Вход волонтёра</h3>
+            <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+              Нет пароля — блок «Первый вход» на странице входа с тем же email, что в анкете. Уже создавали пароль — форма «Вход».
+            </p>
+            <a href="/volunteer/login.html" class="mt-6 inline-flex w-full justify-center rounded-full bg-slate-800 px-6 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-slate-900/20 transition hover:bg-slate-900">
+              Перейти ко входу волонтёра
+            </a>
+            <p class="mt-5 text-xs text-slate-500 leading-relaxed">
+              Восстановление пароля — через воспитательный отдел (куратору с той же почты, что в заявке).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="department" class="scroll-mt-28 border-b border-blue-100 bg-gradient-to-b from-white to-mist/50 py-14 md:py-18">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="font-display text-2xl md:text-3xl font-semibold text-slate-900">Воспитательный отдел и этот сайт</h2>
+        <p class="mt-4 max-w-3xl text-slate-600 leading-relaxed">
+          Платформа помогает собрать заявки, опубликовать календарь и материалы без лишних таблиц «на стороне». Очная работа отдела — расписание приёма, индивидуальные беседы, согласование выездов — по-прежнему ведётся по правилам колледжа и договорённостям с кураторами.
+        </p>
+        <div class="mt-10 grid gap-6 lg:grid-cols-2">
+          <div class="rounded-2xl border border-blue-100 bg-white p-6 shadow-sm">
+            <h3 class="font-display text-lg font-semibold text-slate-900">Что сайт берёт на себя</h3>
+            <ul class="mt-4 space-y-3 text-sm text-slate-600">
+              <li class="flex gap-2"><span class="text-blue-600 font-bold">·</span> приём анкет и учёт статусов заявок;</li>
+              <li class="flex gap-2"><span class="text-blue-600 font-bold">·</span> публикация событий и заметок для участников;</li>
+              <li class="flex gap-2"><span class="text-blue-600 font-bold">·</span> личный кабинет волонтёра как «витрина» учётной записи и списков участия.</li>
+            </ul>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h3 class="font-display text-lg font-semibold text-slate-900">Что остаётся вне сайта</h3>
+            <ul class="mt-4 space-y-3 text-sm text-slate-600">
+              <li class="flex gap-2"><span class="text-slate-400 font-bold">·</span> официальные документы и приказы — по регламенту учреждения;</li>
+              <li class="flex gap-2"><span class="text-slate-400 font-bold">·</span> личный приём и телефоны колледжа — см.
+                <a href="https://oksei.ru/page/kontakty" target="_blank" rel="noopener noreferrer" class="font-medium text-blue-700 hover:underline">контакты на oksei.ru</a>;</li>
+              <li class="flex gap-2"><span class="text-slate-400 font-bold">·</span> согласования выездов и страховки — по инструкциям отдела.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="advisor-panel" class="scroll-mt-28 border-b border-blue-100 bg-mist/40 py-14 md:py-18">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="font-display text-2xl md:text-3xl font-semibold text-slate-900">Кураторы и советники: закрытая панель</h2>
+        <p class="mt-4 max-w-3xl text-slate-600 leading-relaxed">
+          Учётные записи с ролью «советник» создаются администратором или ответственным лицом; через публичную регистрацию такая роль не выдаётся.
+          Работа с заявками, мероприятиями, участниками и публикациями ведётся в отдельной панели — <strong class="font-semibold text-slate-800">ссылка на вход не публикуется</strong> в студенческом меню.
+        </p>
+        <div class="mt-10 grid gap-6 md:grid-cols-2">
+          <div class="rounded-2xl border border-blue-100 bg-white p-6 shadow-sm">
+            <p class="text-xs font-bold uppercase tracking-wide text-blue-700">Возможности панели</p>
+            <ul class="mt-4 space-y-3 text-sm text-slate-600">
+              <li class="flex gap-2"><span class="text-blue-600">→</span> заявки волонтёров, одобрение и отклонение;</li>
+              <li class="flex gap-2"><span class="text-blue-600">→</span> мероприятия, списки участников, выгрузки;</li>
+              <li class="flex gap-2"><span class="text-blue-600">→</span> материалы и блог, загрузка изображений;</li>
+              <li class="flex gap-2"><span class="text-blue-600">→</span> сводная статистика по разделам.</li>
+            </ul>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-xs font-bold uppercase tracking-wide text-slate-700">Доступ и безопасность</p>
+            <ul class="mt-4 space-y-3 text-sm text-slate-600">
+              <li class="flex gap-2"><span class="text-slate-400">•</span> адрес входа сообщает руководитель направления или техадминистратор;</li>
+              <li class="flex gap-2"><span class="text-slate-400">•</span> не передавайте пароль посторонним;</li>
+              <li class="flex gap-2"><span class="text-slate-400">•</span> после работы — выход из панели, особенно на общих ПК.</li>
+            </ul>
+            <p class="mt-5 rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-600 border border-slate-100">
+              Студенту для участия достаточно
+              <a href="apply.html" class="font-medium text-blue-700 hover:underline">заявки</a>
+              и <a href="/volunteer/login.html" class="font-medium text-blue-700 hover:underline">кабинета волонтёра</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq-section" class="scroll-mt-28 bg-mist/30 py-14 md:py-18">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="font-display text-2xl font-semibold text-slate-900">Частые вопросы</h2>
+        <div class="mt-8 space-y-3 max-w-3xl">
+          <details class="faq group rounded-2xl border border-blue-100 bg-white/90 px-5 py-4 open:shadow-sm open:ring-1 open:ring-slate-900/5">
+            <summary class="font-semibold text-slate-900 pr-8 text-left">
+              Почему нельзя войти в кабинет сразу после анкеты?
+            </summary>
+            <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+              Учётная запись создаётся после одобрения заявки. До этого вход для волонтёра закрыт — дождитесь ответа отдела на почту или звонка.
+            </p>
+          </details>
+          <details class="faq group rounded-2xl border border-blue-100 bg-white/90 px-5 py-4 open:shadow-sm open:ring-1 open:ring-slate-900/5">
+            <summary class="font-semibold text-slate-900 pr-8 text-left">
+              В кабинете пустой список мероприятий
+            </summary>
+            <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+              Список заполняется, когда куратор закрепляет вас за событиями в системе. Общий календарь всегда доступен в разделе «События» на сайте.
+            </p>
+          </details>
+          <details class="faq group rounded-2xl border border-blue-100 bg-white/90 px-5 py-4 open:shadow-sm open:ring-1 open:ring-slate-900/5">
+            <summary class="font-semibold text-slate-900 pr-8 text-left">
+              Потерял ссылку на вход для сотрудника отдела
+            </summary>
+            <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+              Обратитесь к завучу по воспитательной работе или администратору сайта колледжа — заново сообщат адрес или проверят учётную запись советника.
+            </p>
+          </details>
+          <details class="faq group rounded-2xl border border-blue-100 bg-white/90 px-5 py-4 open:shadow-sm open:ring-1 open:ring-slate-900/5">
+            <summary class="font-semibold text-slate-900 pr-8 text-left">
+              Где официальные контакты и новости колледжа?
+            </summary>
+            <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+              Раздел <a href="college-news.html" class="font-medium text-blue-700 hover:text-blue-900">«Новости колледжа»</a> на этом сайте и страница
+              <a href="https://oksei.ru/page/kontakty" target="_blank" rel="noopener noreferrer" class="font-medium text-blue-700 hover:text-blue-900">контактов на oksei.ru</a>.
+            </p>
+          </details>
+        </div>
+
+        <div class="mt-14 rounded-2xl border border-blue-100 bg-gradient-to-br from-white to-mist/60 p-6 md:p-8">
+          <h3 class="font-display text-lg font-semibold text-slate-900">Материалы и разделы сайта</h3>
+          <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <a href="how.html" class="card-lift rounded-xl border border-blue-100 bg-white p-4 text-sm font-medium text-slate-800 hover:border-blue-200">
+              Как устроено участие
+            </a>
+            <a href="faq.html" class="card-lift rounded-xl border border-blue-100 bg-white p-4 text-sm font-medium text-slate-800 hover:border-blue-200">
+              Частые вопросы (FAQ)
+            </a>
+            <a href="materials.html" class="card-lift rounded-xl border border-blue-100 bg-white p-4 text-sm font-medium text-slate-800 hover:border-blue-200">
+              Материалы отдела
+            </a>
+            <a href="events.html" class="card-lift rounded-xl border border-blue-100 bg-white p-4 text-sm font-medium text-slate-800 hover:border-blue-200">
+              Календарь событий
+            </a>
+            <a href="college-news.html" class="card-lift rounded-xl border border-blue-100 bg-white p-4 text-sm font-medium text-slate-800 hover:border-blue-200">
+              Новости колледжа
+            </a>
+            <a href="https://oksei.ru/page/kontakty" target="_blank" rel="noopener noreferrer" class="card-lift rounded-xl border border-blue-100 bg-white p-4 text-sm font-medium text-slate-800 hover:border-blue-200">
+              Контакты oksei.ru
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-10 flex flex-wrap gap-4 rounded-2xl border border-blue-100 bg-blue-50/50 px-6 py-5 text-sm text-slate-700">
+          <span class="font-semibold text-slate-900">Организационные вопросы</span>
+          <span>График приёма воспитательного отдела и телефоны — на официальном сайте колледжа в разделе контактов.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-blue-100 bg-mist/50">
+    <div class="max-w-6xl mx-auto px-4 py-10 md:flex md:flex-wrap md:justify-between md:gap-8">
+      <div class="text-sm text-slate-600">
+        <p class="font-display font-semibold text-slate-900">ГАПОУ ОКЭИ · воспитательный отдел</p>
+        <p class="mt-2 max-w-lg">Справочный центр по доступу к платформе волонтёрского направления. Вход для советников выдаётся отделом отдельно.</p>
+      </div>
+      <div class="mt-6 md:mt-0 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+        <a href="index.html" class="text-blue-700 hover:text-blue-900 font-medium">Главная</a>
+        <a href="/volunteer/login.html" class="text-blue-700 hover:text-blue-900 font-medium">Кабинет волонтёра</a>
+        <a href="apply.html" class="text-blue-700 hover:text-blue-900 font-medium">Заявка</a>
+        <a href="college-news.html" class="text-slate-600 hover:text-blue-700">Новости колледжа</a>
+        <a href="faq.html" class="text-slate-600 hover:text-blue-700">FAQ</a>
+      </div>
+    </div>
+    <div class="border-t border-blue-100/80 bg-white/60 py-4 text-center text-xs text-slate-500">
+      © ГАПОУ ОКЭИ · воспитательный отдел
+    </div>
+  </footer>
+</body>
+</html>
