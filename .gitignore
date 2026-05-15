@@ -9,3 +9,6 @@ logs/
 venv/
 node_modules/
 .DS_Store
+
+# Локальные пароли — не публиковать на GitHub
+УЧЁТНЫЕ-ДАННЫЕ.md
