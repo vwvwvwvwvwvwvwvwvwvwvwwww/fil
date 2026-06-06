@@ -6,7 +6,7 @@
   function redirectIfForbidden(me) {
     const page = document.body.getAttribute("data-staff-page");
     if (!page) return false;
-    if (page === "applications" && !me.can_manage_applications) {
+    if ((page === "applications" || page === "volunteers") && !me.can_manage_applications) {
       window.location.replace(me.can_manage_content ? "/admin/events.html" : "/admin/dashboard.html");
       return true;
     }
@@ -24,14 +24,14 @@
     try {
       const me = await window.adminAuth.fetchMe();
       if (redirectIfForbidden(me)) return;
-      document.querySelectorAll('[data-staff-nav="applications"]').forEach(function (el) {
+      document.querySelectorAll('[data-staff-nav="applications"], [data-staff-nav="volunteers"]').forEach(function (el) {
         if (!me.can_manage_applications) el.classList.add("hidden");
       });
       document.querySelectorAll('[data-staff-nav="content"]').forEach(function (el) {
         if (!me.can_manage_content) el.classList.add("hidden");
       });
     } catch (_) {
-      /* сессия и права проверяются при запросах к API */
+      /* нет сессии — страница входа или редирект обработает */
     }
   });
 })();

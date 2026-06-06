@@ -6,6 +6,7 @@
   <title>Блог</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/theme.css" />
   <script src="/static/js/admin-auth.js"></script>
   <script src="/static/js/admin-staff-nav.js"></script>
   <script src="/static/js/form-validators.js"></script>
@@ -15,26 +16,29 @@
   </style>
 </head>
 <body class="bg-[#F0F7FF] min-h-screen" data-staff-page="content">
-  <header class="border-b border-blue-100 bg-white">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-3">
-      <a href="../index.html" class="flex items-center gap-3 shrink-0 rounded-lg pr-1 hover:opacity-90 transition">
+  <header class="site-header sticky top-0 z-30 border-b border-blue-100 bg-white pt-[env(safe-area-inset-top)]">
+    <div class="max-w-6xl mx-auto px-3 sm:px-4 py-3 sm:py-4">
+      <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+      <a href="../index.html" class="flex min-w-0 items-center gap-2.5 sm:gap-3 shrink-0 rounded-lg pr-1 hover:opacity-90 transition">
         <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="36" height="36" class="h-9 w-9 rounded-xl bg-white object-contain ring-1 ring-slate-200" />
-        <span class="leading-tight">
+        <span class="min-w-0 leading-tight">
           <span class="font-display block font-semibold text-slate-900">ГАПОУ ОКЭИ</span>
           <span class="text-xs text-slate-500">восп. отдел</span>
         </span>
       </a>
-      <nav class="flex flex-wrap gap-3 text-sm">
+      <nav class="site-nav-scroll flex w-full min-w-0 flex-nowrap items-center gap-1 overflow-x-auto overscroll-x-contain text-sm sm:w-auto sm:flex-wrap sm:overflow-visible sm:gap-3">
         <a href="/admin/dashboard.html" class="text-gray-600 hover:text-blue-600">Статистика</a>
         <a href="/admin/applications.html" data-staff-nav="applications" class="text-gray-600 hover:text-blue-600">Заявки</a>
+        <a href="/admin/volunteers.html" data-staff-nav="volunteers" class="text-gray-600 hover:text-blue-600">Волонтёры</a>
         <a href="/admin/events.html" data-staff-nav="content" class="text-gray-600 hover:text-blue-600">Мероприятия</a>
         <a href="/admin/blog.html" data-staff-nav="content" class="font-medium text-blue-700">Блог</a>
         <button type="button" id="logout" class="text-red-600">Выйти</button>
       </nav>
     </div>
+    </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 py-8 space-y-8">
+  <main class="max-w-6xl mx-auto px-3 sm:px-4 py-6 sm:py-8 space-y-8">
     <section class="bg-white border border-blue-100 shadow-sm rounded-xl p-6">
       <h2 id="form-heading" class="text-lg font-semibold">Новая публикация</h2>
       <p id="edit-banner" class="hidden mt-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-950">

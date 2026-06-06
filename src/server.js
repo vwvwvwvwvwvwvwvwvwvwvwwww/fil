@@ -659,6 +659,27 @@ export async function buildServer() {
     };
   });
 
+  app.get("/api/admin/volunteers", { preHandler: [requireStaffApplications] }, async () => {
+    const rows = getDb()
+      .prepare(
+        `SELECT u.id, u.full_name, u.email, u.phone, u.created_at, u.password_hash,
+                (SELECT COUNT(*) FROM event_participants ep WHERE ep.user_id = u.id) AS events_count
+         FROM users u
+         WHERE u.role = 'volunteer' AND u.is_active = 1
+         ORDER BY u.full_name COLLATE NOCASE`
+      )
+      .all();
+    return rows.map((r) => ({
+      id: r.id,
+      full_name: r.full_name,
+      email: r.email,
+      phone: r.phone,
+      created_at: asIso(r.created_at),
+      has_password: !!(r.password_hash && String(r.password_hash).trim()),
+      events_count: Number(r.events_count) || 0,
+    }));
+  });
+
   app.get("/api/admin/applications", { preHandler: [requireStaffApplications] }, async (request) => {
     const st = request.query.status_filter || request.query.status;
     let sql = "SELECT * FROM applications ORDER BY created_at DESC";
@@ -1083,6 +1104,7 @@ export async function buildServer() {
   app.get("/admin/login.html", htmlPage("admin/login.html"));
   app.get("/admin/dashboard.html", htmlPage("admin/dashboard.html"));
   app.get("/admin/applications.html", htmlPage("admin/applications.html"));
+  app.get("/admin/volunteers.html", htmlPage("admin/volunteers.html"));
   app.get("/admin/events.html", htmlPage("admin/events.html"));
   app.get("/admin/blog.html", htmlPage("admin/blog.html"));
 
