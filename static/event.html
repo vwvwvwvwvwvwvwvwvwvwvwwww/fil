@@ -21,28 +21,43 @@
   <link rel="stylesheet" href="/static/css/theme.css" />
 </head>
 <body class="min-h-screen bg-[#f8fafc] font-sans text-ink antialiased">
-  <header class="sticky top-0 z-30 border-b border-blue-100/80 bg-white/85 backdrop-blur-md">
-    <div class="max-w-6xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-4">
-      <a href="index.html" class="group flex items-center gap-3 min-w-0">
-        <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-0.5 shadow-md shadow-blue-600/20 ring-2 ring-white" />
-        <span class="leading-tight truncate">
-          <span class="font-display block text-lg font-semibold tracking-tight text-slate-900">ГАПОУ ОКЭИ</span>
-          <span class="text-xs font-medium text-slate-500">воспитательный отдел · волонтёрское направление</span>
-        </span>
-      </a>
-      <nav class="flex flex-wrap items-center gap-5 text-sm font-medium text-slate-600" aria-label="Основное меню">
-        <a href="about.html" class="nav-link hover:text-blue-700">О движении</a>
-        <a href="how.html" class="nav-link hover:text-blue-700">Как устроено</a>
-        <a href="events.html" class="nav-link font-semibold text-blue-700" aria-current="page">События</a>
-        <a href="college-news.html" class="nav-link hover:text-blue-700">Новости колледжа</a>
-        <a href="materials.html" class="nav-link hover:text-blue-700">Материалы</a>
-        <a href="faq.html" class="nav-link hover:text-blue-700">Вопросы</a>
-        <a href="/volunteer/login.html" class="nav-link hover:text-blue-700">Кабинет волонтёра</a>
-        <a href="apply.html" class="rounded-full bg-blue-600 px-4 py-2 text-white shadow-sm transition hover:bg-blue-700">Подать заявку</a>
-      </nav>
+  <header class="site-header sticky top-0 z-30 border-b border-blue-100/80 bg-white/85 backdrop-blur-md pt-[env(safe-area-inset-top)]">
+    <div class="max-w-6xl relative z-10 mx-auto px-3 sm:px-4 py-3 sm:py-3.5">
+      <div class="relative flex items-center justify-between gap-3">
+        <a href="index.html" class="group flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3 lg:max-w-[min(100%,26rem)]">
+          <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-0.5 shadow-md shadow-blue-600/20 ring-2 ring-white" />
+          <span class="min-w-0 leading-tight">
+            <span class="font-display block text-lg font-semibold tracking-tight text-slate-900">ГАПОУ ОКЭИ</span>
+            <span class="text-xs font-medium text-slate-500 text-balance">воспитательный отдел · волонтёрское направление</span>
+          </span>
+        </a>
+        <button type="button" class="site-menu-btn flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-xl border border-slate-200/90 bg-white text-slate-800 shadow-sm transition hover:border-blue-200 hover:bg-blue-50/60 lg:hidden" data-site-menu-toggle aria-expanded="false" aria-controls="site-menu-main" aria-label="Открыть меню">
+          <span class="site-menu-icon flex h-[14px] w-[22px] flex-col justify-between" aria-hidden="true">
+            <span class="site-menu-icon-bar site-menu-icon-bar--1 block h-0.5 w-full rounded-full bg-slate-800"></span>
+            <span class="site-menu-icon-bar site-menu-icon-bar--2 block h-0.5 w-full rounded-full bg-slate-800"></span>
+            <span class="site-menu-icon-bar site-menu-icon-bar--3 block h-0.5 w-full rounded-full bg-slate-800"></span>
+          </span>
+        </button>
+        <nav id="site-menu-main" data-site-menu class="site-main-nav lg:flex-1" aria-label="Основное меню">
+          <button type="button" class="site-menu-close mb-1 flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 py-3 text-sm font-medium text-slate-800 shadow-sm lg:hidden" data-site-menu-close>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+            Закрыть меню
+          </button>
+          <a href="about.html" class="nav-link hover:text-blue-700">О движении</a>
+          <a href="how.html" class="nav-link hover:text-blue-700">Как устроено</a>
+          <a href="events.html" class="nav-link font-semibold text-blue-700" aria-current="page">События</a>
+          <a href="college-news.html" class="nav-link hover:text-blue-700">Новости колледжа</a>
+          <a href="materials.html" class="nav-link hover:text-blue-700">Материалы</a>
+          <a href="faq.html" class="nav-link hover:text-blue-700">Вопросы</a>
+          <a href="/volunteer/login.html" class="nav-link hover:text-blue-700">Кабинет волонтёра</a>
+          <a href="/admin/login.html" class="nav-link font-medium text-slate-700 hover:text-blue-800">Вход сотрудника</a>
+          <a href="apply.html" class="rounded-full bg-blue-600 px-4 py-2 text-white shadow-sm transition hover:bg-blue-700">Подать заявку</a>
+        </nav>
+      </div>
     </div>
-    <div class="border-t border-blue-100/80 bg-mist/40">
-      <div class="max-w-6xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3 text-sm">
+    <div class="site-menu-backdrop" data-site-menu-backdrop aria-hidden="true"></div>
+    <div class="relative z-10 border-t border-blue-100/80 bg-mist/40">
+      <div class="max-w-6xl mx-auto px-3 sm:px-4 py-2 flex min-w-0 flex-wrap items-center justify-between gap-2 text-sm">
         <nav class="text-slate-600">
           <a href="events.html" class="font-medium text-blue-700 hover:text-blue-900">← Все события</a>
           <span class="mx-2 text-slate-300">/</span>
@@ -53,7 +68,7 @@
     </div>
   </header>
 
-  <main class="max-w-5xl mx-auto px-4 py-10 md:py-14" id="main">
+  <main class="max-w-5xl mx-auto px-3 sm:px-4 py-8 sm:py-10 md:py-14" id="main">
     <p id="loading" class="rounded-2xl border border-dashed border-slate-200 bg-white px-6 py-16 text-center text-slate-500">Загружаем карточку события…</p>
     <div id="content" class="hidden space-y-10">
       <header class="relative overflow-hidden rounded-3xl border border-blue-100 bg-gradient-to-br from-white to-blue-50/80 p-8 md:p-10 shadow-sm ring-1 ring-slate-900/5">
@@ -65,6 +80,13 @@
           <p id="loc" class="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 ring-1 ring-slate-200/80 empty:hidden"></p>
         </div>
         <div id="desc" class="relative mt-8 max-w-3xl whitespace-pre-wrap text-base leading-relaxed text-slate-700"></div>
+        <div id="signup" class="relative mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <button type="button" id="signup-btn" class="hidden rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60">
+            Записаться
+          </button>
+          <p id="signup-status" class="hidden text-sm font-medium"></p>
+          <p id="signup-hint" class="hidden text-sm text-slate-600"></p>
+        </div>
       </header>
 
       <section class="rounded-3xl border border-slate-200 bg-white shadow-sm ring-1 ring-slate-900/5 overflow-hidden">
@@ -94,12 +116,14 @@
       </section>
 
       <p class="text-center text-sm text-slate-500">
-        Вопросы по записи — на почту воспитательного отдела или в учебную часть колледжа (режим работы — уточняйте на сайте ГАПОУ ОКЭИ).
+        Записаться могут одобренные волонтёры после входа в личный кабинет. Остальные — через
+        <a href="apply.html" class="font-medium text-blue-700 hover:text-blue-900">анкету</a>.
       </p>
     </div>
     <p id="err" class="hidden rounded-2xl border border-red-100 bg-red-50 px-5 py-4 text-sm text-red-800"></p>
   </main>
 
+  <script src="/static/js/volunteer-auth.js"></script>
   <script>
     const params = new URLSearchParams(location.search);
     const id = params.get("id");
@@ -115,6 +139,164 @@
     }
 
     let exportRows = [];
+    let currentEvent = null;
+    let registrationState = null;
+
+    function isRegistrationOpenLocal(ev) {
+      if (!ev) return false;
+      if (ev.date_end) {
+        const end = new Date(ev.date_end);
+        if (!Number.isNaN(end.getTime()) && end < new Date()) return false;
+      }
+      return true;
+    }
+
+    function loginUrlForEvent() {
+      const next = "/event.html?id=" + encodeURIComponent(id) + "#signup";
+      return "/volunteer/login.html?next=" + encodeURIComponent(next);
+    }
+
+    function renderParticipants(parts) {
+      const tbody = document.getElementById("tbody");
+      const empty = document.getElementById("empty-parts");
+      const csvBtn = document.getElementById("csv");
+      exportRows = parts.map((p) => ({ name: p.display_name, role: p.role_in_event }));
+      tbody.innerHTML = "";
+      empty.classList.add("hidden");
+      csvBtn.classList.add("hidden");
+      if (!parts.length) {
+        empty.classList.remove("hidden");
+        return;
+      }
+      csvBtn.classList.remove("hidden");
+      tbody.innerHTML = parts
+        .map(
+          (p) =>
+            '<tr class="hover:bg-blue-50/40 transition">' +
+            '<td class="px-6 py-3 font-medium text-slate-900">' +
+            escapeHtml(p.display_name) +
+            "</td>" +
+            '<td class="px-6 py-3 text-slate-600">' +
+            escapeHtml(p.role_in_event) +
+            "</td></tr>"
+        )
+        .join("");
+    }
+
+    function updateSignupUi() {
+      const btn = document.getElementById("signup-btn");
+      const status = document.getElementById("signup-status");
+      const hint = document.getElementById("signup-hint");
+      btn.classList.add("hidden");
+      status.classList.add("hidden");
+      hint.classList.add("hidden");
+      btn.disabled = false;
+      btn.textContent = "Записаться";
+      btn.className =
+        "rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60";
+
+      if (!currentEvent) return;
+
+      const open =
+        registrationState && registrationState.registration_open !== undefined
+          ? registrationState.registration_open
+          : isRegistrationOpenLocal(currentEvent);
+      if (!open) {
+        status.textContent = "Регистрация на это мероприятие закрыта.";
+        status.className = "text-sm font-medium text-slate-600";
+        status.classList.remove("hidden");
+        return;
+      }
+
+      if (!registrationState || registrationState.logged_in === false) {
+        btn.classList.remove("hidden");
+        btn.textContent = "Записаться";
+        hint.innerHTML =
+          'Нужен вход в <a href="' +
+          escapeHtml(loginUrlForEvent()) +
+          '" class="font-medium text-blue-700 hover:text-blue-900">личный кабинет волонтёра</a>. Нет аккаунта — подайте <a href="apply.html" class="font-medium text-blue-700 hover:text-blue-900">заявку</a>.';
+        hint.classList.remove("hidden");
+        return;
+      }
+
+      if (registrationState.registered) {
+        status.textContent = "Вы записаны на это мероприятие" +
+          (registrationState.role_in_event ? " · роль: " + registrationState.role_in_event : "") +
+          ".";
+        status.className = "text-sm font-medium text-emerald-800";
+        status.classList.remove("hidden");
+        hint.innerHTML = '<a href="/volunteer/account.html" class="font-medium text-blue-700 hover:text-blue-900">Открыть личный кабинет →</a>';
+        hint.classList.remove("hidden");
+        return;
+      }
+
+      btn.classList.remove("hidden");
+      hint.textContent = "После записи мероприятие появится в вашем личном кабинете.";
+      hint.classList.remove("hidden");
+    }
+
+    async function loadRegistrationStatus() {
+      if (!id || !window.volunteerAuth) {
+        registrationState = { logged_in: false, registration_open: isRegistrationOpenLocal(currentEvent) };
+        updateSignupUi();
+        return;
+      }
+      try {
+        const res = await volunteerAuth.fetchOptional("/api/volunteer/events/" + encodeURIComponent(id) + "/registration");
+        if (res.status === 401) {
+          registrationState = { logged_in: false, registration_open: isRegistrationOpenLocal(currentEvent) };
+        } else if (res.ok) {
+          registrationState = { logged_in: true, ...(await res.json()) };
+        } else {
+          registrationState = { logged_in: false, registration_open: isRegistrationOpenLocal(currentEvent) };
+        }
+      } catch {
+        registrationState = { logged_in: false, registration_open: isRegistrationOpenLocal(currentEvent) };
+      }
+      updateSignupUi();
+    }
+
+    document.getElementById("signup-btn").addEventListener("click", async () => {
+      if (!registrationState || registrationState.logged_in === false) {
+        window.location.href = loginUrlForEvent();
+        return;
+      }
+      const btn = document.getElementById("signup-btn");
+      btn.disabled = true;
+      btn.textContent = "Записываем…";
+      try {
+        const res = await volunteerAuth.fetch("/api/volunteer/events/" + encodeURIComponent(id) + "/register", {
+          method: "POST",
+          body: JSON.stringify({}),
+        });
+        if (!res.ok) {
+          const msg = await volunteerAuth.parseError(res);
+          alert(msg);
+          btn.disabled = false;
+          btn.textContent = "Записаться";
+          return;
+        }
+        const data = await res.json();
+        registrationState = {
+          logged_in: true,
+          registered: true,
+          registration_open: true,
+          role_in_event: data.role_in_event || "волонтёр",
+        };
+        updateSignupUi();
+        const evRes = await fetch("/api/events/" + encodeURIComponent(id));
+        if (evRes.ok) {
+          const ev = await evRes.json();
+          renderParticipants(ev.participants || []);
+        }
+      } catch (e) {
+        if (e.message !== "unauthorized") {
+          alert("Не удалось записаться. Попробуйте позже.");
+          btn.disabled = false;
+          btn.textContent = "Записаться";
+        }
+      }
+    });
 
     document.getElementById("csv").addEventListener("click", () => {
       if (!exportRows.length) return;
@@ -139,6 +321,7 @@
         const res = await fetch("/api/events/" + encodeURIComponent(id));
         if (!res.ok) throw new Error();
         const ev = await res.json();
+        currentEvent = ev;
         loading.classList.add("hidden");
         content.classList.remove("hidden");
         document.getElementById("badge-status").classList.remove("hidden");
@@ -155,20 +338,10 @@
         }
         document.getElementById("desc").textContent = ev.description || "Подробное описание добавят организаторы. Следите за объявлениями воспитательного отдела и официальными каналами колледжа.";
 
-        const tbody = document.getElementById("tbody");
-        const empty = document.getElementById("empty-parts");
-        const parts = ev.participants || [];
-        exportRows = parts.map((p) => ({ name: p.display_name, role: p.role_in_event }));
-        if (parts.length) {
-          document.getElementById("csv").classList.remove("hidden");
-          tbody.innerHTML = parts.map((p) => `
-            <tr class="hover:bg-blue-50/40 transition">
-              <td class="px-6 py-3 font-medium text-slate-900">${escapeHtml(p.display_name)}</td>
-              <td class="px-6 py-3 text-slate-600">${escapeHtml(p.role_in_event)}</td>
-            </tr>
-          `).join("");
-        } else {
-          empty.classList.remove("hidden");
+        renderParticipants(ev.participants || []);
+        await loadRegistrationStatus();
+        if (location.hash === "#signup") {
+          document.getElementById("signup").scrollIntoView({ behavior: "smooth", block: "center" });
         }
       } catch {
         loading.classList.add("hidden");
@@ -183,5 +356,6 @@
       return d.innerHTML;
     }
   </script>
+  <script src="/static/js/site-menu.js" defer></script>
 </body>
 </html>

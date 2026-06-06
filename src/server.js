@@ -41,6 +41,17 @@ function sendDetail(reply, status, detail) {
   return reply.code(status).send({ detail });
 }
 
+/** Можно ли ещё записаться на опубликованное мероприятие (логика как в календаре). */
+function isEventRegistrationOpen(ev) {
+  if (!ev || ev.status !== "published") return false;
+  const now = new Date();
+  if (ev.date_end) {
+    const end = new Date(ev.date_end.includes("T") ? ev.date_end : ev.date_end.replace(" ", "T"));
+    if (!Number.isNaN(end.getTime()) && end < now) return false;
+  }
+  return true;
+}
+
 /** Кэш ответа VK wall.get (между запросами клиента). */
 let vkWallCache = { at: 0, json: null };
 
@@ -615,6 +626,46 @@ export async function buildServer() {
     reply.clearCookie(config.cookieName, c);
     reply.clearCookie(config.csrfCookieName, c);
     return { ok: true };
+  });
+
+  app.get("/api/volunteer/events/:id/registration", { preHandler: [requireVolunteer] }, async (request, reply) => {
+    const eventId = Number(request.params.id);
+    const ev = getDb()
+      .prepare("SELECT * FROM events WHERE id = ? AND status = 'published'")
+      .get(eventId);
+    if (!ev) return sendDetail(reply, 404, "Мероприятие не найдено");
+    const row = getDb()
+      .prepare("SELECT role_in_event FROM event_participants WHERE event_id = ? AND user_id = ?")
+      .get(eventId, request.volunteer.id);
+    return {
+      registered: !!row,
+      role_in_event: row?.role_in_event ?? null,
+      registration_open: isEventRegistrationOpen(ev),
+    };
+  });
+
+  app.post("/api/volunteer/events/:id/register", { preHandler: [requireVolunteer] }, async (request, reply) => {
+    const eventId = Number(request.params.id);
+    const ev = getDb()
+      .prepare("SELECT * FROM events WHERE id = ? AND status = 'published'")
+      .get(eventId);
+    if (!ev) return sendDetail(reply, 404, "Мероприятие не найдено");
+    if (!isEventRegistrationOpen(ev)) {
+      return sendDetail(reply, 400, "Регистрация на это мероприятие закрыта");
+    }
+    const uid = request.volunteer.id;
+    const existing = getDb()
+      .prepare("SELECT id FROM event_participants WHERE event_id = ? AND user_id = ?")
+      .get(eventId, uid);
+    if (existing) return sendDetail(reply, 409, "Вы уже записаны на это мероприятие");
+    getDb()
+      .prepare(
+        `INSERT INTO event_participants (event_id, user_id, external_name, role_in_event)
+         VALUES (?, ?, NULL, ?)`
+      )
+      .run(eventId, uid, "волонтёр");
+    logLine(`volunteer_registered user_id=${uid} event_id=${eventId}`);
+    return reply.code(201).send({ ok: true, role_in_event: "волонтёр" });
   });
 
   app.get("/api/volunteer/me", { preHandler: [requireVolunteer] }, async (request) => {
