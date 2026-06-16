@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/static/css/theme.css" />
   <script src="/static/js/admin-auth.js"></script>
   <script src="/static/js/admin-staff-nav.js"></script>
+  <script src="/static/js/admin-modal.js"></script>
   <style>body { font-family: Inter, system-ui, sans-serif; }</style>
 </head>
 <body class="bg-[#F0F7FF] min-h-screen" data-staff-page="applications">
@@ -146,14 +147,10 @@
         const updated = await res.json();
         rows = rows.map((x) => (x.id === updated.id ? updated : x));
         render();
-        msg.textContent = "Сохранено";
-        msg.className = "mt-4 text-sm text-green-600";
-        msg.classList.remove("hidden");
+        await adminModal.alert("Статус заявки обновлён.", { title: "Сохранено" });
       } catch (err) {
         if (err.message === "unauthorized") return;
-        msg.textContent = err.message;
-        msg.className = "mt-4 text-sm text-red-600";
-        msg.classList.remove("hidden");
+        await adminModal.alert(err.message, { type: "error" });
       }
     });
 
@@ -164,7 +161,7 @@
         rows = await res.json();
         render();
       } catch (e) {
-        if (e.message !== "unauthorized") alert(e.message);
+        if (e.message !== "unauthorized") await adminModal.alert(e.message, { type: "error" });
       }
     })();
   </script>

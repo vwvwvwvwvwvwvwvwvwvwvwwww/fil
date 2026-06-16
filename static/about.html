@@ -22,30 +22,45 @@
   <link rel="stylesheet" href="/static/css/theme.css" />
 </head>
 <body class="bg-white font-sans text-ink antialiased">
-  <header class="sticky top-0 z-30 border-b border-blue-100/80 bg-white/85 backdrop-blur-md">
-    <div class="max-w-6xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-4">
-      <a href="index.html" class="group flex items-center gap-3">
-        <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-0.5 shadow-md shadow-blue-600/20 ring-2 ring-white" />
-        <span class="leading-tight">
-          <span class="font-display block text-lg font-semibold tracking-tight text-slate-900">ГАПОУ ОКЭИ</span>
-          <span class="text-xs font-medium text-slate-500">воспитательный отдел · волонтёрское направление</span>
-        </span>
-      </a>
-      <nav class="flex flex-wrap items-center gap-5 text-sm font-medium text-slate-600" aria-label="Основное меню">
-        <a href="about.html" class="nav-link font-semibold text-blue-700" aria-current="page">О движении</a>
-        <a href="how.html" class="nav-link hover:text-blue-700">Как устроено</a>
-        <a href="events.html" class="nav-link hover:text-blue-700">События</a>
-        <a href="college-news.html" class="nav-link hover:text-blue-700">Новости колледжа</a>
-        <a href="materials.html" class="nav-link hover:text-blue-700">Материалы</a>
-        <a href="faq.html" class="nav-link hover:text-blue-700">Вопросы</a>
-        <a href="/volunteer/login.html" class="nav-link hover:text-blue-700">Кабинет волонтёра</a>
-        <a href="apply.html" class="rounded-full bg-blue-600 px-4 py-2 text-white shadow-sm transition hover:bg-blue-700">Подать заявку</a>
-      </nav>
+  <header class="site-header sticky top-0 z-30 border-b border-blue-100/80 bg-white/85 backdrop-blur-md pt-[env(safe-area-inset-top)]">
+    <div class="max-w-6xl relative z-10 mx-auto px-3 sm:px-4 py-3 sm:py-3.5">
+      <div class="relative flex items-center justify-between gap-3">
+        <a href="index.html" class="group flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3 lg:max-w-[min(100%,26rem)]">
+          <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-0.5 shadow-md shadow-blue-600/20 ring-2 ring-white" />
+          <span class="min-w-0 leading-tight">
+            <span class="font-display block text-lg font-semibold tracking-tight text-slate-900">ГАПОУ ОКЭИ</span>
+            <span class="text-xs font-medium text-slate-500 text-balance">воспитательный отдел · волонтёрское направление</span>
+          </span>
+        </a>
+        <button type="button" class="site-menu-btn flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-xl border border-slate-200/90 bg-white text-slate-800 shadow-sm transition hover:border-blue-200 hover:bg-blue-50/60 lg:hidden" data-site-menu-toggle aria-expanded="false" aria-controls="site-menu-main" aria-label="Открыть меню">
+          <span class="site-menu-icon flex h-[14px] w-[22px] flex-col justify-between" aria-hidden="true">
+            <span class="site-menu-icon-bar site-menu-icon-bar--1 block h-0.5 w-full rounded-full bg-slate-800"></span>
+            <span class="site-menu-icon-bar site-menu-icon-bar--2 block h-0.5 w-full rounded-full bg-slate-800"></span>
+            <span class="site-menu-icon-bar site-menu-icon-bar--3 block h-0.5 w-full rounded-full bg-slate-800"></span>
+          </span>
+        </button>
+        <nav id="site-menu-main" data-site-menu class="site-main-nav lg:flex-1" aria-label="Основное меню">
+          <button type="button" class="site-menu-close mb-1 flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 py-3 text-sm font-medium text-slate-800 shadow-sm lg:hidden" data-site-menu-close>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+            Закрыть меню
+          </button>
+          <a href="about.html" class="nav-link font-semibold text-blue-700" aria-current="page">О движении</a>
+          <a href="how.html" class="nav-link hover:text-blue-700">Как устроено</a>
+          <a href="events.html" class="nav-link hover:text-blue-700">События</a>
+          <a href="college-news.html" class="nav-link hover:text-blue-700">Новости колледжа</a>
+          <a href="materials.html" class="nav-link hover:text-blue-700">Материалы</a>
+          <a href="faq.html" class="nav-link hover:text-blue-700">Вопросы</a>
+          <a href="/volunteer/login.html" class="nav-link hover:text-blue-700">Кабинет волонтёра</a>
+          <a href="/admin/login.html" class="nav-link font-medium text-slate-700 hover:text-blue-800">Вход сотрудника</a>
+          <a href="apply.html" class="rounded-full bg-blue-600 px-4 py-2 text-white shadow-sm transition hover:bg-blue-700">Подать заявку</a>
+        </nav>
+      </div>
     </div>
+    <div class="site-menu-backdrop" data-site-menu-backdrop aria-hidden="true"></div>
   </header>
 
   <div class="border-b border-blue-100/80 bg-mist/30">
-    <div class="max-w-6xl mx-auto px-4 py-8 md:py-10">
+    <div class="max-w-6xl mx-auto px-3 sm:px-4 py-8 md:py-10">
       <p class="text-xs font-semibold uppercase tracking-wide text-blue-700">О движении</p>
       <h1 class="font-display mt-2 text-3xl font-semibold text-slate-900 md:text-4xl">Зачем мы это делаем</h1>
       <p class="mt-3 max-w-2xl text-slate-600">Ценности волонтёрского направления воспитательного отдела и практические направления, где студентам особенно нужны участники.</p>
@@ -53,7 +68,7 @@
   </div>
 
   <section class="py-16 md:py-20">
-    <div class="max-w-6xl mx-auto px-4">
+    <div class="max-w-6xl mx-auto px-3 sm:px-4">
       <div class="rule-accent mb-6"></div>
       <div class="max-w-3xl">
         <h2 class="font-display text-3xl font-semibold text-slate-900 md:text-4xl">Зачем существует движение</h2>
@@ -90,7 +105,7 @@
   </section>
 
   <section class="py-16 md:py-20 border-b border-blue-100">
-    <div class="max-w-6xl mx-auto px-4 lg:flex lg:gap-14">
+    <div class="max-w-6xl mx-auto px-3 sm:px-4 lg:flex lg:gap-14">
       <div class="lg:w-2/5">
         <div class="rule-accent mb-6"></div>
         <h2 class="font-display text-3xl font-semibold text-slate-900">Направления, где особенно нужны руки</h2>
@@ -125,7 +140,7 @@
   </section>
 
   <section class="py-14 bg-slate-900 text-slate-100">
-    <div class="max-w-6xl mx-auto px-4 md:flex md:items-start md:gap-12">
+    <div class="max-w-6xl mx-auto px-3 sm:px-4 md:flex md:items-start md:gap-12">
       <blockquote class="md:flex-1 font-display text-xl md:text-2xl font-medium leading-snug text-white">
         «Для нас важно, чтобы студенты видели: волонтёрство — это не «ещё отчёт», а живое участие в жизни города и колледжа, которое потом с гордостью указывают в резюме».
       </blockquote>
@@ -137,14 +152,14 @@
   </section>
 
   <footer class="border-t border-blue-100 bg-mist/50">
-    <div class="max-w-6xl mx-auto px-4 py-12 md:flex md:justify-between md:gap-10">
+    <div class="max-w-6xl mx-auto px-3 sm:px-4 py-12 md:flex md:justify-between md:gap-10">
       <div class="flex gap-5 max-w-xl">
         <img src="/static/img/oksei/logo.png" alt="Логотип ГАПОУ ОКЭИ" width="72" height="72" class="h-[4.5rem] w-[4.5rem] shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-slate-200/90" />
         <div>
           <p class="font-display text-lg font-semibold text-slate-900">ГАПОУ ОКЭИ</p>
           <p class="mt-2 max-w-sm text-sm leading-relaxed text-slate-600">
             Государственное автономное профессиональное образовательное учреждение Оренбургской области «Оренбургский колледж экономики и информатики» (ОКЭИ),
-            г. Оренбург, ул. Чкалова, 11. Воспитательный отдел ведёт волонтёрское направление на собственной платформе: заявки, календарь событий и материалы без сторонних CRM.
+            г. Оренбург, ул. Чкалова, 11. Воспитательный отдел ведёт волонтёрское направление: онлайн-заявки, календарь событий и материалы для участников.
           </p>
           <p class="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
             <a href="index.html" class="hover:text-blue-700">Главная</a>
@@ -167,11 +182,15 @@
         <p class="mt-4">
           <a href="/volunteer/login.html" class="font-medium text-blue-700 hover:text-blue-900">Личный кабинет волонтёра →</a>
         </p>
+        <p class="mt-3">
+          <a href="/admin/login.html" class="site-footer-staff-btn">Вход для сотрудников</a>
+        </p>
       </div>
     </div>
     <div class="border-t border-blue-100/80 bg-white/60 py-4 text-center text-xs text-slate-500">
       © ГАПОУ ОКЭИ · воспитательный отдел · волонтёрское направление
     </div>
   </footer>
+  <script src="/static/js/site-menu.js" defer></script>
 </body>
 </html>

@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/static/css/theme.css" />
   <script src="/static/js/admin-auth.js"></script>
   <script src="/static/js/admin-staff-nav.js"></script>
+  <script src="/static/js/admin-modal.js"></script>
   <script src="/static/js/form-validators.js"></script>
   <style>
     body { font-family: Inter, system-ui, sans-serif; }
@@ -174,13 +175,13 @@
       });
       list.querySelectorAll(".del").forEach((btn) => {
         btn.addEventListener("click", async () => {
-          if (!confirm("Удалить публикацию?")) return;
+          if (!(await adminModal.confirm("Удалить публикацию?"))) return;
           const id = btn.getAttribute("data-id");
           const res = await adminAuth.fetch(`/api/admin/blog/${id}`, { method: "DELETE" });
           if (res.ok || res.status === 204) {
             if (editingId === Number(id)) exitEditMode();
             loadPosts();
-          } else alert(await adminAuth.parseError(res));
+          } else await adminModal.alert(await adminAuth.parseError(res), { type: "error" });
         });
       });
     }
@@ -194,9 +195,7 @@
       const content = document.getElementById("content").value;
       const blogErr = window.FormValidators.validateBlogCreate(title, content);
       if (blogErr) {
-        msg.textContent = blogErr;
-        msg.className = "max-w-6xl mx-auto px-4 text-sm text-red-600";
-        msg.classList.remove("hidden");
+        await adminModal.alert(blogErr, { type: "error", title: "Проверьте форму" });
         return;
       }
       btn.disabled = true;
@@ -224,9 +223,7 @@
           if (!res.ok) throw new Error(await adminAuth.parseError(res));
           exitEditMode();
           await loadPosts();
-          msg.textContent = "Изменения сохранены";
-          msg.className = "max-w-6xl mx-auto px-4 text-sm text-green-600";
-          msg.classList.remove("hidden");
+          await adminModal.alert("Изменения сохранены.", { title: "Публикация обновлена" });
         } else {
           const res = await adminAuth.fetch("/api/admin/blog", {
             method: "POST",
@@ -236,15 +233,11 @@
           e.target.reset();
           document.getElementById("file").value = "";
           await loadPosts();
-          msg.textContent = "Публикация создана";
-          msg.className = "max-w-6xl mx-auto px-4 text-sm text-green-600";
-          msg.classList.remove("hidden");
+          await adminModal.alert("Материал опубликован на сайте.", { title: "Публикация создана" });
         }
       } catch (err) {
         if (err.message !== "unauthorized") {
-          msg.textContent = err.message;
-          msg.className = "max-w-6xl mx-auto px-4 text-sm text-red-600";
-          msg.classList.remove("hidden");
+          await adminModal.alert(err.message, { type: "error" });
         }
       } finally {
         btn.disabled = false;

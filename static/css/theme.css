@@ -1,5 +1,279 @@
 @import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* iOS: не увеличивать страницу при фокусе на полях */
+@media (max-width: 640px) {
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea {
+    font-size: 1rem;
+  }
+}
+
+/* Горизонтальный скролл навигации (админка и узкие блоки) */
+.site-nav-scroll {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.site-nav-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 1023.98px) {
+  .site-header .site-nav-scroll > a {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 0.5rem;
+  }
+
+  .site-header .site-nav-scroll > button {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 0.5rem;
+  }
+
+  .site-header .site-nav-scroll > a.rounded-full {
+    min-height: 2.75rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* ——— мобильное бургер-меню (публичный сайт) ——— */
+
+body.site-menu-open {
+  overflow: hidden;
+}
+
+.site-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: rgba(15, 23, 42, 0.42);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.28s ease, visibility 0.28s ease;
+}
+
+.site-menu-backdrop--open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+@media (min-width: 1024px) {
+  .site-menu-backdrop {
+    display: none !important;
+  }
+}
+
+.site-menu-btn {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.site-menu-icon-bar {
+  transition: transform 0.28s ease, opacity 0.2s ease;
+  transform-origin: center;
+}
+
+.site-menu-btn[aria-expanded="true"] .site-menu-icon-bar--1 {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.site-menu-btn[aria-expanded="true"] .site-menu-icon-bar--2 {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.site-menu-btn[aria-expanded="true"] .site-menu-icon-bar--3 {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+@media (max-width: 1023.98px) {
+  .site-header .site-main-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.2rem;
+    width: min(19.5rem, calc(100vw - 2.5rem));
+    max-width: 90vw;
+    padding: max(0.75rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right))
+      max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+    padding-top: max(4.25rem, calc(env(safe-area-inset-top) + 3.25rem));
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #fff;
+    border-left: 1px solid rgba(226, 232, 240, 0.95);
+    box-shadow: -12px 0 40px -12px rgba(15, 23, 42, 0.18);
+    transform: translateX(105%);
+    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .site-header .site-main-nav.site-main-nav--open {
+    transform: translateX(0);
+  }
+
+  .site-header .site-main-nav > a.nav-link::after {
+    display: none;
+  }
+
+  .site-header .site-main-nav > a {
+    display: flex;
+    align-items: center;
+    min-height: 2.875rem;
+    padding: 0.65rem 0.85rem;
+    border-radius: 0.65rem;
+    font-size: 1rem;
+    color: #334155;
+  }
+
+  .site-header .site-main-nav > a:hover {
+    background: rgba(239, 246, 255, 0.95);
+    color: #1d4ed8;
+  }
+
+  .site-header .site-main-nav > a.rounded-full {
+    margin-top: 0.5rem;
+    justify-content: center;
+    text-align: center;
+    font-weight: 600;
+    min-height: 3rem;
+  }
+
+  .site-header .site-main-nav--apply-secondary {
+    border-left: none;
+    box-shadow: 0 18px 50px -20px rgba(15, 23, 42, 0.2);
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-header .max-w-6xl > div.flex {
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 0.65rem;
+    column-gap: 1rem;
+  }
+
+  .site-header .site-main-nav {
+    position: static;
+    order: 3;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: flex-start;
+    justify-content: flex-start;
+    gap: 0.45rem 0.75rem;
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 0;
+    padding: 0.7rem 0 0;
+    margin: 0;
+    overflow: visible;
+    background: transparent;
+    border: none;
+    border-top: 1px solid rgba(219, 234, 254, 0.95);
+    box-shadow: none;
+    transform: none !important;
+    font-size: 0.875rem;
+    line-height: 1.35;
+  }
+
+  .site-header .site-main-nav > a {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.25rem;
+    padding: 0.2rem 0.15rem;
+    white-space: nowrap;
+  }
+
+  .site-header .site-main-nav > a[href*="admin/login"] {
+    margin-left: auto;
+    font-weight: 600;
+    color: #334155;
+  }
+
+  .site-header .site-main-nav > a.rounded-full {
+    margin-left: 0;
+    margin-top: 0;
+    min-height: 2.5rem;
+    padding: 0.5rem 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .site-header .site-main-nav.site-main-nav--apply-secondary {
+    width: 100%;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    justify-content: flex-start;
+    border-top: 1px solid rgba(219, 234, 254, 0.95);
+  }
+
+  .site-menu-close {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .site-header .max-w-6xl > div.flex {
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .site-header .site-main-nav:not(.site-main-nav--apply-secondary) {
+    order: 2;
+    flex: 1 1 auto;
+    width: auto;
+    max-width: none;
+    padding-top: 0;
+    margin-top: 0;
+    border-top: none;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.85rem;
+    font-size: 0.8125rem;
+  }
+
+  .site-header .site-main-nav:not(.site-main-nav--apply-secondary) > a[href*="admin/login"] {
+    margin-left: 0.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-menu-backdrop,
+  .site-header .site-main-nav,
+  .site-menu-icon-bar {
+    transition-duration: 0.01ms !important;
+  }
+}
+
 :root {
   --ink: #0f172a;
   --ink-soft: #334155;
@@ -13,6 +287,7 @@
 }
 
 body {
+  overflow-x: clip;
   font-family: "Source Sans 3", system-ui, sans-serif;
   color: var(--ink);
 }
@@ -85,4 +360,148 @@ details.faq summary::-webkit-details-marker {
 }
 .nav-link:hover::after {
   width: 100%;
+}
+
+/* ——— модальные окна панели сотрудника ——— */
+
+body.admin-modal-open {
+  overflow: hidden;
+}
+
+.admin-modal-root {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+}
+
+.admin-modal-root.hidden {
+  display: none;
+}
+
+.admin-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+.admin-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 24rem);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(191, 219, 254, 0.95);
+  background: #fff;
+  padding: 1.5rem 1.35rem 1.25rem;
+  box-shadow: 0 24px 60px -24px rgba(15, 23, 42, 0.35);
+}
+
+.admin-modal-panel--success {
+  border-color: rgba(167, 243, 208, 0.95);
+}
+
+.admin-modal-panel--error {
+  border-color: rgba(254, 202, 202, 0.95);
+}
+
+.admin-modal-panel--confirm {
+  border-color: rgba(191, 219, 254, 0.95);
+}
+
+.admin-modal-badge {
+  display: inline-flex;
+  margin-bottom: 0.65rem;
+  border-radius: 999px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #1d4ed8;
+  background: #eff6ff;
+}
+
+.admin-modal-panel--success .admin-modal-badge {
+  color: #047857;
+  background: #ecfdf5;
+}
+
+.admin-modal-panel--error .admin-modal-badge {
+  color: #b91c1c;
+  background: #fef2f2;
+}
+
+.admin-modal-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.35;
+}
+
+.admin-modal-body {
+  margin-top: 0.55rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: #475569;
+}
+
+.admin-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.admin-modal-btn {
+  min-height: 2.5rem;
+  border-radius: 999px;
+  padding: 0.5rem 1.15rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.admin-modal-btn--primary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.admin-modal-btn--primary:hover {
+  background: #1d4ed8;
+}
+
+.admin-modal-btn--ghost {
+  background: #fff;
+  border-color: #e2e8f0;
+  color: #334155;
+}
+
+.admin-modal-btn--ghost:hover {
+  background: #f8fafc;
+}
+
+/* Кнопка входа сотрудников в футере */
+.site-footer-staff-btn {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(199, 210, 254, 0.95);
+  background: rgba(238, 242, 255, 0.95);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #312e81;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  transition: background 0.15s ease;
+}
+
+.site-footer-staff-btn:hover {
+  background: #e0e7ff;
 }

@@ -1,4 +1,5 @@
 import {
+  ensureDemoAdvisorLogin,
   seedAdmin,
   seedDemoBlogPosts,
   seedDemoEvents,
@@ -11,6 +12,7 @@ import { buildServer } from "./server.js";
 
 const app = await buildServer();
 seedAdmin();
+ensureDemoAdvisorLogin();
 seedStaffAccounts();
 seedDemoEvents();
 seedMayVictoryEvents();

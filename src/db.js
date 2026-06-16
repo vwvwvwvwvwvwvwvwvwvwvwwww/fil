@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import Database from "better-sqlite3";
-import { hashPassword } from "./auth.js";
+import { hashPassword, verifyPassword } from "./auth.js";
 import { config, sqlitePath } from "./config.js";
 
 let db;
@@ -111,7 +111,7 @@ export function seedStaffAccounts() {
   const kustomovaEmail =
     String(process.env.STAFF_KUSTOMOVA_EMAIL || "").trim() || "k.kustomova@vup-oksei.example.org";
 
-  const adminEmail = String(process.env.ADMIN_EMAIL || "").trim().toLowerCase();
+  const adminEmail = String(config.adminEmail || "").trim().toLowerCase();
   const rows = [
     {
       full_name: "Семикина Евгения Владимировна",
@@ -146,39 +146,104 @@ export function seedStaffAccounts() {
   );
 
   let added = 0;
+  let synced = 0;
   for (const row of rows) {
     const em = String(row.email).trim().toLowerCase();
     if (adminEmail && em === adminEmail) {
       console.warn(`seedStaffAccounts: email ${em} совпадает с ADMIN_EMAIL — запись пропущена`);
       continue;
     }
-    const exists = getDb().prepare("SELECT id FROM users WHERE email = ?").get(row.email);
-    if (exists) continue;
-    insert.run({ ...row, password_hash: hash });
-    added += 1;
+    const exists = getDb().prepare("SELECT id, password_hash FROM users WHERE email = ?").get(row.email);
+    if (!exists) {
+      insert.run({ ...row, password_hash: hash });
+      added += 1;
+      continue;
+    }
+    if (!exists.password_hash || !verifyPassword(password, exists.password_hash)) {
+      getDb().prepare("UPDATE users SET password_hash = ?, is_active = 1, role = 'advisor' WHERE id = ?").run(
+        hash,
+        exists.id
+      );
+      synced += 1;
+    }
   }
   if (added > 0) {
     console.info(
       `Добавлены учётные записи сотрудников (${added}): заявки / контент — см. staff_position и права в БД; пароль из STAFF_ACCOUNTS_PASSWORD`
     );
   }
+  if (synced > 0) {
+    console.info(`Обновлены пароли сотрудников (${synced}) из STAFF_ACCOUNTS_PASSWORD`);
+  }
+}
+
+function upsertAdvisorAccount(email, password, fullName, extra = {}) {
+  const em = String(email).trim().toLowerCase();
+  const pw = String(password || "").trim();
+  if (!em || !pw) return false;
+  const hash = hashPassword(pw);
+  const row = getDb().prepare("SELECT id, role, password_hash FROM users WHERE lower(email) = ?").get(em);
+  if (!row) {
+    getDb()
+      .prepare(
+        `INSERT INTO users (full_name, email, phone, role, is_active, password_hash, staff_position, can_manage_applications, can_manage_content)
+         VALUES (?, ?, ?, 'advisor', 1, ?, ?, ?, ?)`
+      )
+      .run(
+        fullName,
+        em,
+        extra.phone ?? null,
+        hash,
+        extra.staff_position ?? null,
+        extra.can_manage_applications ?? 1,
+        extra.can_manage_content ?? 1
+      );
+    return true;
+  }
+  if (row.role !== "advisor") return false;
+  if (!row.password_hash || !verifyPassword(pw, row.password_hash)) {
+    getDb()
+      .prepare(
+        `UPDATE users SET password_hash = ?, is_active = 1, role = 'advisor',
+         staff_position = COALESCE(?, staff_position),
+         can_manage_applications = COALESCE(?, can_manage_applications),
+         can_manage_content = COALESCE(?, can_manage_content)
+         WHERE id = ?`
+      )
+      .run(
+        hash,
+        extra.staff_position ?? null,
+        extra.can_manage_applications ?? null,
+        extra.can_manage_content ?? null,
+        row.id
+      );
+    return true;
+  }
+  return false;
 }
 
 export function seedAdmin() {
-  if (!config.adminEmail || !config.adminPassword) {
+  const email = String(config.adminEmail || "").trim().toLowerCase();
+  const password = String(config.adminPassword || "").trim();
+  if (!email || !password) {
     console.warn("ADMIN_EMAIL / ADMIN_PASSWORD не заданы — первичный советник не создан");
     return;
   }
-  const row = getDb().prepare("SELECT id FROM users WHERE email = ?").get(config.adminEmail);
-  if (row) return;
-  const hash = hashPassword(config.adminPassword);
-  getDb()
-    .prepare(
-      `INSERT INTO users (full_name, email, role, is_active, password_hash)
-       VALUES ('Советник (начальный)', ?, 'advisor', 1, ?)`
-    )
-    .run(config.adminEmail, hash);
-  console.info("Создан начальный советник", config.adminEmail);
+  if (upsertAdvisorAccount(email, password, "Советник (начальный)")) {
+    console.info(`Синхронизирован начальный советник ${email}`);
+  }
+}
+
+/** Демо-вход advisor@example.com — всегда доступен по паролю из УЧЁТНЫЕ-ДАННЫЕ.md */
+export function ensureDemoAdvisorLogin() {
+  const email = "advisor@example.com";
+  const password =
+    config.adminEmail === email
+      ? config.adminPassword
+      : String(process.env.ADMIN_PASSWORD || "change_me_secure").trim();
+  if (upsertAdvisorAccount(email, password, "Советник (начальный)")) {
+    console.info(`Синхронизирован демо-советник ${email}`);
+  }
 }
 
 /** Если в БД ещё нет мероприятий — добавляем несколько опубликованных (для демонстрации и проверки календаря). */

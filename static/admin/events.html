@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/static/css/theme.css" />
   <script src="/static/js/admin-auth.js"></script>
   <script src="/static/js/admin-staff-nav.js"></script>
+  <script src="/static/js/admin-modal.js"></script>
   <script src="/static/js/form-validators.js"></script>
   <style>body { font-family: Inter, system-ui, sans-serif; }</style>
 </head>
@@ -149,9 +150,7 @@
       msg.classList.add("hidden");
       const clientErr = window.FormValidators.validateEventCreate(payloadValidate);
       if (clientErr) {
-        msg.textContent = clientErr;
-        msg.className = "max-w-6xl mx-auto px-4 text-sm text-red-600";
-        msg.classList.remove("hidden");
+        await adminModal.alert(clientErr, { type: "error", title: "Проверьте форму" });
         return;
       }
       const payload = {
@@ -170,14 +169,10 @@
         if (!res.ok) throw new Error(await adminAuth.parseError(res));
         e.target.reset();
         await loadEvents();
-        msg.textContent = "Мероприятие создано";
-        msg.className = "max-w-6xl mx-auto px-4 text-sm text-green-600";
-        msg.classList.remove("hidden");
+        await adminModal.alert("Мероприятие добавлено в календарь.", { title: "Мероприятие создано" });
       } catch (err) {
         if (err.message === "unauthorized") return;
-        msg.textContent = err.message;
-        msg.className = "max-w-6xl mx-auto px-4 text-sm text-red-600";
-        msg.classList.remove("hidden");
+        await adminModal.alert(err.message, { type: "error" });
       }
     });
 
@@ -263,14 +258,15 @@
           if (res.ok) {
             root.querySelector(".bulk").value = "";
             await loadDetail(ev.id, root);
-          } else alert(await adminAuth.parseError(res));
+            await adminModal.alert("Участники добавлены в список.", { title: "Список обновлён" });
+          } else await adminModal.alert(await adminAuth.parseError(res), { type: "error" });
         });
 
         root.querySelector(".del").addEventListener("click", async () => {
-          if (!confirm("Удалить мероприятие?")) return;
+          if (!(await adminModal.confirm("Удалить мероприятие? Это действие нельзя отменить."))) return;
           const res = await adminAuth.fetch(`/api/admin/events/${ev.id}`, { method: "DELETE" });
           if (res.ok || res.status === 204) loadEvents();
-          else alert(await adminAuth.parseError(res));
+          else await adminModal.alert(await adminAuth.parseError(res), { type: "error" });
         });
 
         list.appendChild(node);
